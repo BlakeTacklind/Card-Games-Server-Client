@@ -5,6 +5,7 @@ conString = "pq://cardsDatabase:tN6Y6RUZyp5J7T3bLdru@serenity.isozilla.com:5432/
 
 db = postgresql.open(conString)
 
+
 def startGame(playerList, gameNumber, instanceName):
     if not playerList:
         return False
@@ -39,6 +40,7 @@ def startGame(playerList, gameNumber, instanceName):
 
     return True
 
+
 def copyDeckToZone(deckNum, zoneNum):
     c = db.prepare("SELECT cards FROM \"presetZones\" WHERE \"id\" = $1;")(deckNum)
 
@@ -55,6 +57,7 @@ def copyDeckToZone(deckNum, zoneNum):
         return True
 
     return False
+
 
 def moveCardBetweenZones(cardPos, fromZ, toZ):
     if (cardPos < 0):
@@ -82,8 +85,9 @@ def moveCardBetweenZones(cardPos, fromZ, toZ):
 
     return True
 
+
 def shuffleZone(zoneNum):
-    x = db.prepare("SELECT cards FROM zones WHERE \"id\" = $1")(zoneNum)
+    x = db.prepare("SELECT cards FROM zones WHERE \"id\" = $1;")(zoneNum)
 
     if not x:
         return False
@@ -91,8 +95,19 @@ def shuffleZone(zoneNum):
     x=list(x[0][0])
     shuffle(x)
 
-    db.prepare("UPDATE zones SET cards = $1 WHERE \"id\" = $2")(x, zoneNum)
+    db.prepare("UPDATE zones SET cards = $1 WHERE \"id\" = $2;")(x, zoneNum)
 
     return True
 
 
+def killGame(gameNum):
+    if db.prepare("DELETE FROM \"gameInstance\" WHERE \"id\" = $1")(gameNum)[1] == 1:
+        return True
+
+    return False
+
+print(killGame(2))
+
+
+def moveMoveInZone(zoneNum, moveFrom, moveTo):
+    
