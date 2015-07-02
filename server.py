@@ -11,8 +11,6 @@ def copyDeckToZone(deckNum, zoneNum):
         return False
 
     c = list(c[0]["cards"])
-
-    #shuffle(c)
     
     x = db.prepare("UPDATE zones SET cards = $1::integer[] WHERE \"id\" = $2::integer;")(c, zoneNum)[1]
 
@@ -23,6 +21,14 @@ def copyDeckToZone(deckNum, zoneNum):
 
 def gCDTZ(gNum, dNum, zNum):
     game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner IS NULL ORDER BY id;")(gNum)
+
+    if not game:
+        return False
+
+    return copyDeckToZone(dNum, game[zNum]["id"])
+
+def goCDTZ(gNum, owner, dNum, zNum):
+    game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner = $2::integer ORDER BY id;")(gNum, owner)
 
     if not game:
         return False
@@ -45,6 +51,14 @@ def shuffleZone(zoneNum):
 
 def gSZ(gNum, zNum):
     game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner IS NULL ORDER BY id;")(gNum)
+
+    if not game:
+        return False
+
+    return shuffleZone(dNum, game[zNum]["id"])
+
+def goSZ(gNum, owner, zNum):
+    game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner = $2::integer ORDER BY id;")(gNum, owner)
 
     if not game:
         return False
@@ -77,8 +91,6 @@ def moveCardBetweenZones(cardPos, fromZ, toZ, cardPlace):
 
     a.insert(cardPlace, c["cards"][cardPos])
 
-    #print(a)
-
     x = db.prepare("UPDATE zones SET cards = $1::integer[] WHERE \"id\" = $2::integer AND game = $3::integer;")(a, toZ, c["game"])[1]
     
     if x == 0:
@@ -88,12 +100,44 @@ def moveCardBetweenZones(cardPos, fromZ, toZ, cardPlace):
 
     del c[cardPos]
 
-    db.prepare("UPDATE zones SET cards = $1 WHERE \"id\" = $2;")(c, fromZ)
+    db.prepare("UPDATE zones SET cards = $1::integer[] WHERE \"id\" = $2::integer;")(c, fromZ)
 
     return True
 
 def gMCBZ(gNum, pos, fZ, tZ, plc):
-    return False
+    game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner IS NULL ORDER BY id;")(gNum)
+
+    if not game:
+        return False
+
+    return moveCardBetweenZones(pos, game[fZ]["id"], game[tZ]["id"], plc)
+
+def goMCBZ(gNum, ownerF, pos, fZ, tZ, plc):
+    player = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner = $2::integer ORDER BY id;")(gNum, ownerF)
+    game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner IS NULL ORDER BY id;")(gNum)
+
+    if not player or not game:
+        return False
+
+    return moveCardBetweenZones(pos, player[fZ]["id"], game[tZ]["id"], plc)
+
+def gMCBZo(gNum, ownerT, pos, fZ, tZ, plc):
+    player = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner = $2::integer ORDER BY id;")(gNum, ownerT)
+    game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner IS NULL ORDER BY id;")(gNum)
+
+    if not player or not game:
+        return False
+
+    return moveCardBetweenZones(pos, game[fZ]["id"], player[tZ]["id"], plc)
+
+def goMCBZo(gNum, pos, fZ, tZ, plc):
+    player1 = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner = $2::integer ORDER BY id;")(gNum, ownerF)
+    player2 = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner = $2::integer ORDER BY id;")(gNum, ownerT)
+
+    if not player1 or not player2:
+        return False
+
+    return moveCardBetweenZones(pos, player1[fZ]["id"], player2[tZ]["id"], plc)
 
 def moveTopToBackOfZones(fromZ, toZ):
     if (cardPos < 0):
@@ -109,7 +153,7 @@ def moveTopToBackOfZones(fromZ, toZ):
     if (len(c["cards"]) < 1):
         return False
 
-    x = db.prepare("UPDATE zones SET cards = array_append(zones.cards, $1) WHERE \"id\" = $2 AND game = $3;")(c["cards"][0], toZ, c["game"])[1]
+    x = db.prepare("UPDATE zones SET cards = array_append(zones.cards, $1::integer) WHERE \"id\" = $2::integer AND game = $3::integer;")(c["cards"][0], toZ, c["game"])[1]
     if x == 0:
         return False
 
@@ -117,7 +161,7 @@ def moveTopToBackOfZones(fromZ, toZ):
 
     del c[0]
 
-    db.prepare("UPDATE zones SET cards = $1 WHERE \"id\" = $2;")(c, fromZ)
+    db.prepare("UPDATE zones SET cards = $1::integer[] WHERE \"id\" = $2::integer;")(c, fromZ)
 
     return True
 
@@ -177,7 +221,21 @@ def moveCardInZone(zoneNum, moveFrom, moveTo):
 
     return True
 
-#print('move card', moveCardInZone(2,0,2))
+def gMCIZ(gNum, zNum, mF, mT):
+    game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner IS NULL ORDER BY id;")(gNum)
+
+    if not game:
+        return False
+
+    return moveCardInZone(game[zNum]["id"], mF, mT)
+
+def goMCIZ(gNum, owner, zNum, mF, mT):
+    game = db.prepare("SELECT id FROM zones WHERE game = $1::integer AND owner = $2::integer ORDER BY id;")(gNum, owner)
+
+    if not game:
+        return False
+
+    return moveCardInZone(game[zNum]["id"], mF, mT)
 
 def funcExec(funcArr, gNum):
     func = db.prepare("SELECT code, args FROM funcs WHERE id = $1::integer;")(funcArr[0])
