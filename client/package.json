@@ -1,0 +1,38 @@
+{
+  "name": "Card-Game-WebClient",
+  "version": "0.0.0",
+  "description": "Runs the client side card game player",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "bootstrap": "^3.3.1",
+    "browserify": "^6.3.3",
+    "gulp": "^3.8.10",
+    "gulp-less": "^1.3.6",
+    "gulp-react": "^2.0.0",
+    "gulp-sourcemaps": "^1.2.8",
+    "jquery": "^2.1.1",
+    "printf": "^0.2.0",
+    "react": "^0.12.1",
+    "reactify": "^0.17.1",
+    "vinyl-transform": "^1.0.0"
+  },
+  "devDependencies": {
+    "bootstrap": "^3.3.1",
+    "browserify": "^6.3.3",
+    "gulp": "^3.8.10",
+    "gulp-less": "^1.3.6",
+    "gulp-react": "^2.0.0",
+    "gulp-sourcemaps": "^1.2.8",
+    "jquery": "^2.1.1",
+    "printf": "^0.2.0",
+    "react": "^0.12.1",
+    "reactify": "^0.17.1",
+    "vinyl-transform": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Blake Tacklind <blake@tacklind.com>",
+  "license": "ISC",
+  "repository": "git@github.com:BlakeTacklind/Card-Games-Server-Client.git"
+}

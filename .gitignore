@@ -1,2 +1,4 @@
 __pycache__/
 serverConnection.py
+client/node_modules/
+client/dist/
