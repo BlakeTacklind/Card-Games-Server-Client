@@ -1,42 +1,40 @@
 
-
+socket = null
+isopen = false
 
 var database = {
-   socket: null,
-   isopen: false,
 
    sendMessage: function(obj){
-      if (this.isopen) {
-         this.socket.send(obj);
-         console.log("something sent");     
+      if (isopen) {
+         socket.send(JSON.stringify(obj));
+         console.log("Something sent");     
       } else {
-         console.log("something not sent");
+         console.log("Not Connected");
       }
    },
 
    init: function(){
 
-      this.socket = new WebSocket("ws://127.0.0.1:11337");
-      this.socket.binaryType = "arraybuffer";
+      socket = new WebSocket("ws://127.0.0.1:11337");
+      socket.binaryType = "arraybuffer";
 
-      this.socket.onopen = function() {
+      socket.onopen = function() {
          // console.log(socket);
-         console.log(this.socket);
          console.log("Connected!");
-         this.isopen = true;
-         this.socket.send("{\"firstName\":\"John\", \"lastName\":\"Doe\"}");
+         isopen = true;
+         // console.log(this.isopen);
       }
 
-      this.socket.onmessage = function(e) {
+      socket.onmessage = function(e) {
          if (typeof e.data == "string") {
             console.log("Text message received: " + e.data);
          }
       }
 
-      this.socket.onclose = function(e) {
+      socket.onclose = function(e) {
          console.log("Connection closed.");
-         this.socket = null;
-         this.isopen = false;
+         socket = null;
+         isopen = false;
       }
    },
 }
