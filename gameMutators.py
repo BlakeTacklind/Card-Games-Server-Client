@@ -43,7 +43,7 @@ def startGame(playerList, gameType, instanceName):
         tempZ = list()
 
         for z in t[0]["playerZones"]:
-            tempZ.append(db.prepare("INSERT INTO zones (\"name\", game, owner) VALUES ($1::text, $2::integer, $3::integer) RETURNING id;")(n+"'s "+z, gn, i)[0]["id"])
+            tempZ.append(db.prepare("INSERT INTO zones (\"name\", game, owner) VALUES ($1::text, $2::integer, $3::integer) RETURNING id;")(z, gn, i)[0]["id"])
 
         privzid.append(tempZ)
 

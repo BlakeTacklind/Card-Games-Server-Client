@@ -1,0 +1,18 @@
+10: Login (get id and names)	{name}
+11: return Login data (data)	{id, name, displayname}
+12: failed login 				{name}
+
+20: Create New Player (get id and names)
+
+50: get other players
+
+100: get games list (id, type, players)
+110: create new game (id, type, players)
+
+200: get game zones (cards with visiblity considered)
+210: get zone contents (cards without visibility considerations)
+
+
+
+
+1000> card/zone manipulations

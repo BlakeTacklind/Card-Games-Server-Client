@@ -1,23 +1,43 @@
 'use strict';
 var React = require('react');
 var database = require('./databaseHook.js');
+var WelcomeScreen = require('./WelcomeScreen.jsx');
+var PlayerScreen = require('./PlayerScreen.jsx');
+var playerdata = require('./playerdata');
+
 
 var CardGame = React.createClass({
 
+	gotMessageCallback:function(reqNum, args){
+		console.log(reqNum);
+		console.log(args);
+		if(reqNum == 11){
+			playerdata.userid = args[0];
+			playerdata.username = args[1];
+			playerdata.displayname = args[2];
+			this.setState({status: 1});
+			console.log("changed state")
+		}
+	},
+
 	getInitialState : function(){
-		database.init();
+		database.init(this.gotMessageCallback);
 		// console.log(database.isopen);
-		return null;
+		return {status: 0};
 	},
 
 	render: function(){
-		return <div><h1>HAHA</h1><button onClick={this.sendMessage}>Test</button></div>;
+		if(this.state.status == 0){
+			return <WelcomeScreen />;
+		}
+		if(this.state.status == 1){
+			return <PlayerScreen username = {playerdata.username}/>;
+		}
 	},
 
-	sendMessage: function(){
-		var data = [10, "hi", -2.6];
-		database.sendMessage(data);
-	},
+	// sendMessage: function(){
+	// 	database.sendRequest(10, ["Bob"]);
+	// },
 });
 
 
