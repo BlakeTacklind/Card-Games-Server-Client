@@ -1,4 +1,5 @@
 from serverConnection import db
+from zoneMutators import *
 
 
 #OVERALL GAME FUNCTIONS
@@ -7,7 +8,7 @@ def startGame(playerList, gameType, instanceName):
         return False
 
     #find users with ids passed
-    p = db.prepare("SELECT id, username, displayname FROM users WHERE \"id\" = any($1::integer[]);")(playerList)
+    p = db.prepare("SELECT id, username, displayname, games FROM users WHERE \"id\" = any($1::integer[]);")(playerList)
     
     if len(p) != len(playerList):
         return False
@@ -17,7 +18,14 @@ def startGame(playerList, gameType, instanceName):
     if not t:
         return False
 
+    #create game and get game id number
     gn = db.prepare("INSERT INTO \"gameInstance\" (\"name\", players, \"type\") VALUES ($1::Text, $2::integer[], $3::integer) RETURNING \"id\";")(instanceName, playerList, gameType)[0][0]
+
+    #add game to players game list
+    for player in p:
+        gameList = list(player["games"])
+        gameList.append(gn)
+        db.prepare("UPDATE users SET games = $1::integer[] WHERE id = $2::integer;")(gameList, player["id"])
 
     pubid = list()
 
@@ -27,7 +35,7 @@ def startGame(playerList, gameType, instanceName):
     privzid = list()
     numplayZones = len(t[0]["playerZones"])
 
-    for i, username, displayname in p:
+    for i, username, displayname, games in p:
         n = displayname
         if not displayname:
             n = username
@@ -102,10 +110,16 @@ def startGame(playerList, gameType, instanceName):
 
 #Delete a current game from the system
 def killGame(gameNum):
-    x = db.prepare("DELETE FROM \"gameInstance\" WHERE \"id\" = $1::integer;")(gameNum)
-    #print(str(x))
-    if int(x[1]) == 1:
-        return True
+    x = db.prepare("DELETE FROM \"gameInstance\" WHERE \"id\" = $1::integer RETURNING players;")(gameNum)
 
-    return False
+    if len(x) == 0:
+        return False
+
+    for player in list(x[0]["players"]):
+        games = db.prepare("SELECT games FROM users WHERE \"id\" = $1::integer;")(player)
+        gameList = list(games[0]["games"])
+        gameList.remove(gameNum)
+        db.prepare("UPDATE users SET games = $1::integer[] WHERE id = $2::integer;")(gameList, player)
+
+    return True
 

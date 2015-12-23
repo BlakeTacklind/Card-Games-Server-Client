@@ -2,12 +2,12 @@ from serverConnection import db
 
 
 def getZoneContents(zoneNum):
-    x = db.prepare("select array_length(cards,1) from zones where id = $1::integer limit 1;")(zoneNum)
+    x = db.prepare("SELECT array_length(cards,1) from zones where id = $1::integer limit 1;")(zoneNum)
 
     if not x:
         return None
 
-    y = db.prepare("select x, cards.* from generate_series(1,$1::integer) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $2::integer;")(x[0][0], zoneNum)
+    y = db.prepare("SELECT x, cards.* from generate_series(1,$1::integer) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $2::integer;")(x[0][0], zoneNum)
 
 #    print(x[0][0])
 #    return 0

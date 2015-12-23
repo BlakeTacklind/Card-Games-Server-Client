@@ -1,8 +1,11 @@
 from cardMethods import *
+from playerMethods import *
 from messageHandling import getReturnMessage
 from autobahn.asyncio.websocket import WebSocketServerProtocol, WebSocketServerFactory
 
 myPort = 11337
+
+
 
 import asyncio
 
@@ -11,13 +14,14 @@ class MyServerProtocol(WebSocketServerProtocol):
   # @asyncio.coroutine
   def onConnect(self, request):
     print("Client connecting: {0}".format(request.peer))
+    self.sendMessage("print me?")
 
   def onOpen(self):
     print("WebSocket connection open.")
 
   # @asyncio.coroutine
   def onMessage(self, payload, isBinary):
-    self.sendMessage(getReturnMessage(payload));
+    self.sendMessage(getReturnMessage(payload))
   
 
   def onClose(self, wasClean, code, reason):
