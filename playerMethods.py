@@ -16,3 +16,8 @@ def getGames(playerID):
 
 	return dict(x[0]["games"]);
 
+def addUser(username):
+	return 0
+
+def updateDisplayName(str):
+	return False

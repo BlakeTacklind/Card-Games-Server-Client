@@ -3,6 +3,10 @@
 12: failed login 				{name}
 
 20: Create New Player (get id and names)
+21: Successfully Created Player
+22: user name already exists
+
+30: change display name
 
 50: get other players
 

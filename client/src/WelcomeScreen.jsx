@@ -14,6 +14,15 @@ var WelcomeScreen = React.createClass({
     if(reqNum == 12){
       this.setState({mes: "bad log in"})
     }
+    if(reqNum == 21){
+      playerdata.username = args["username"]
+      playerdata.userid = args["id"]
+      playerdata.displayname = args["displayname"]
+      return "PlayerScreen";
+    }
+    if(reqNum == 22){
+      this.setState({mes: "username already exists"})
+    }
     return null
   },
   getInitialState: function() {
@@ -27,12 +36,17 @@ var WelcomeScreen = React.createClass({
     // console.log("button pushed");
     database.sendRequest(10, {username: this.state.value});
   },
+  addPLayer: function(){
+    // console.log("button pushed");
+    database.sendRequest(20, {username: this.state.value});
+  },
   render: function() {
     var value = this.state.value;
     return <div>
               <h1>Welcome</h1>
               <input type="text" value={value} onChange={this.handleChange} />
               <button onClick={this.loginClicked}>Log In</button>
+              <button onClick={this.addPLayer}>New Log in</button>
               <h4>{this.state.mes}</h4>
            </div>;
   },
