@@ -2,7 +2,7 @@
 import json
 from DBqueries import *
 
-# print('zone ', getZoneContents(93))
+# print('zonesInGame ', zonesInGame(36))
 
 def getReturnMessage(payload):
 	message = json.loads(payload.decode('utf8'))

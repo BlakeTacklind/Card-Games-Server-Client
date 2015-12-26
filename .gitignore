@@ -2,3 +2,5 @@ __pycache__/
 serverConnection.py
 client/node_modules/
 client/dist/
+dist/
+python_play.egg-info/

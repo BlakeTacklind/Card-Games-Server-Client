@@ -7,7 +7,6 @@ var playerdata = {
 	games: null,
 	selGame: -1,
 	gameData: null,
-	zoneName: function(){return gameData},
 	zoneData: null,
 	zoneSelected: -1,
 }

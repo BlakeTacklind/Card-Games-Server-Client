@@ -26,7 +26,7 @@ def getZoneContents(zoneNum):
 #get list of games the player is in
 #TODO: use the player's games list rather then search the whole games list
 def playerGamesBad(playerID):
-    x = db.prepare("SELECT id, name, type FROM \"gameInstance\" WHERE $1::integer = any(players);")(playerID)
+    x = db.prepare("SELECT \"gameInstance\".id, \"gameInstance\".name, \"gameTypes\".name FROM \"gameInstance\", \"gameTypes\" WHERE $1::integer = any(players) AND \"gameInstance\".type = \"gameTypes\".id;")(playerID)
 
     if not x:
         return None
@@ -42,7 +42,7 @@ def playerGamesBad(playerID):
 #print('player games', playerGames(1))
 
 def zonesInGame(gameNum):
-    x = db.prepare("SELECT id, name, owner, \"defaultState\" FROM zones WHERE game = $1::integer;")(gameNum)
+    x = db.prepare("SELECT z.id, z.name, u.id, u.displayname, u.username, z.\"defaultState\" FROM zones z LEFT OUTER JOIN users u ON z.owner = u.id WHERE z.game = $1::integer;")(gameNum)
 
     if not x:
         return None
@@ -51,7 +51,7 @@ def zonesInGame(gameNum):
 
     for i in x:
         i = list(i)
-        lst.append({'id':i[0], 'name':i[1], 'owner':i[2], 'ds':i[3]})
+        lst.append({'id':i[0], 'name':i[1], 'owner':i[2], 'ownerd':i[3], 'owneru':i[4], 'ds':i[5]})
         
     return lst
 
