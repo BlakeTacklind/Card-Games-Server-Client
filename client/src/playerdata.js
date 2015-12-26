@@ -4,7 +4,12 @@ var playerdata = {
 	username: null,
 	displayname: null,
 	name: function(){return (this.displayname == null) ? this.username : this.displayname},
-	games: null
+	games: null,
+	selGame: -1,
+	gameData: null,
+	zoneName: function(){return gameData},
+	zoneData: null,
+	zoneSelected: -1,
 }
 
 

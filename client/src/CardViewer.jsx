@@ -5,7 +5,11 @@ var React = require('react');
 //props: card{id, name, info, resource}
 var CardViewer = React.createClass({
 	render: function(){
-		return <img src={this.props.card["resource"]} alt={this.props.card["name"]}>;
+		if(this.props.card["resource"] != null){
+			return <div><img src={this.props.card["resource"]} alt={this.props.card["name"]} /></div>;
+		}
+		// console.log("test")
+		return <p>{this.props.card["name"]}</p>;
 	},
 });
 

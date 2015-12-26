@@ -16,8 +16,8 @@ var PlayerScreen = React.createClass({
 			</div>;
 	},
 	getGames: function(){
-		
-		database.sendRequest(100, {id: playerdata.userid});
+		this.props.setParentState("GameListScreen")
+		//database.sendRequest(100, {id: playerdata.userid});
 	},
 });
 

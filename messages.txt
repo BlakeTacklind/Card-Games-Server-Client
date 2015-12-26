@@ -10,7 +10,11 @@
 101: return players games
 102: not a player
 
-110: create new game (id, type, players)
+120: Get Game Data
+121: return game Data
+122: no game data to get
+
+150: create new game (id, type, players)
 
 200: get game zones (cards with visiblity considered)
 210: get zone contents (cards without visibility considerations)

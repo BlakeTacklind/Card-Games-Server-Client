@@ -38,8 +38,8 @@ var database = {
       socket.onmessage = function(e) {
          if (typeof e.data == "string") {
             out = JSON.parse(e.data);
-            callback(out['rq'], out['ag']);
             console.log("Text message received: " + e.data);
+            callback(out['rq'], out['ag']);
          }
       }
 

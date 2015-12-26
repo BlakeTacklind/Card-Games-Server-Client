@@ -7,33 +7,53 @@ def getZoneContents(zoneNum):
     if not x:
         return None
 
-    y = db.prepare("SELECT x, cards.* from generate_series(1,$1::integer) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $2::integer;")(x[0][0], zoneNum)
+    y = db.prepare("SELECT x, cards.id, cards.name, cards.info, cards.resource from generate_series(1,$1::integer) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $2::integer;")(x[0][0], zoneNum)
 
-#    print(x[0][0])
+   # print(y)
 #    return 0
 
-    return dict(y)
+    lst = list()
+
+    for i in y:
+        i = list(i)
+        # print(i)
+        lst.append({'pos':i[0], 'id':i[1], 'name':i[2], 'info':i[3], 'resource':i[4]})
+        
+    return lst
 
 #print('cards in zone', getZoneContents(2))
 
 #get list of games the player is in
-def playerGames(playerID):
-    x = db.prepare("SELECT * FROM \"gameInstance\" WHERE $1::integer = any(players);")(playerID)
+#TODO: use the player's games list rather then search the whole games list
+def playerGamesBad(playerID):
+    x = db.prepare("SELECT id, name, type FROM \"gameInstance\" WHERE $1::integer = any(players);")(playerID)
 
     if not x:
         return None
 
-    return dict(x)
+    lst = list()
+
+    for i in x:
+        i = list(i)
+        lst.append({'id':i[0], 'name':i[1], 'type':i[2]})
+        
+    return lst
 
 #print('player games', playerGames(1))
 
 def zonesInGame(gameNum):
-    x = db.prepare("SELECT id, name FROM zones WHERE game = $1::integer;")(gameNum)
+    x = db.prepare("SELECT id, name, owner, \"defaultState\" FROM zones WHERE game = $1::integer;")(gameNum)
 
     if not x:
         return None
 
-    return dict(x)
+    lst = list()
+
+    for i in x:
+        i = list(i)
+        lst.append({'id':i[0], 'name':i[1], 'owner':i[2], 'ds':i[3]})
+        
+    return lst
 
 #print('game zones', zonesInGame(1))
 
