@@ -7,6 +7,9 @@
 50: get other players
 
 100: get games list (id, type, players)
+101: return players games
+102: not a player
+
 110: create new game (id, type, players)
 
 200: get game zones (cards with visiblity considered)

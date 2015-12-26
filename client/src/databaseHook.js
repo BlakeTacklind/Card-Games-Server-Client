@@ -39,7 +39,7 @@ var database = {
          if (typeof e.data == "string") {
             out = JSON.parse(e.data);
             callback(out['rq'], out['ag']);
-            // console.log("Text message received: " + e.data);
+            console.log("Text message received: " + e.data);
          }
       }
 

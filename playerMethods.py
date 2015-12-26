@@ -6,7 +6,7 @@ def login(name):
 	if not x:
 		return None
 
-	return x[0];
+	return dict(x[0]);
 
 def getGames(playerID):
 	x = db.prepare("SELECT games from users where id = $1::integer limit 1;")(playerID)
@@ -14,5 +14,5 @@ def getGames(playerID):
 	if not x:
 		return None
 
-	return x[0]["games"];
+	return dict(x[0]["games"]);
 

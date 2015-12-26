@@ -12,7 +12,7 @@ def getZoneContents(zoneNum):
 #    print(x[0][0])
 #    return 0
 
-    return list(y)
+    return dict(y)
 
 #print('cards in zone', getZoneContents(2))
 
@@ -23,7 +23,7 @@ def playerGames(playerID):
     if not x:
         return None
 
-    return list(x)
+    return dict(x)
 
 #print('player games', playerGames(1))
 
@@ -33,7 +33,7 @@ def zonesInGame(gameNum):
     if not x:
         return None
 
-    return list(x)
+    return dict(x)
 
 #print('game zones', zonesInGame(1))
 
@@ -46,14 +46,14 @@ def zonesInGameByPlayer(playerID, gameNum):
     if not x:
         return None
 
-    return list(x)
+    return dict(x)
 
 #print('plaers zones', zonesInGameByPlayer(1,1))
 
 def getGameTypes():
     x = db.prepare("SELECT id, name FROM \"gameTypes\";")()
 
-    return list(x)
+    return dict(x)
 
 #print( getGameTypes())
 
