@@ -71,10 +71,25 @@ def zonesInGameByPlayer(playerID, gameNum):
 #print('plaers zones', zonesInGameByPlayer(1,1))
 
 def getGameTypes():
-    x = db.prepare("SELECT id, name FROM \"gameTypes\";")()
+    x = db.prepare("SELECT id, name, info FROM \"gameTypes\";")()
 
-    return dict(x)
+    lst = list()
 
+    for i in x:
+        i = list(i)
+        lst.append({'id':i[0], 'name':i[1], 'info':i[2]})
+        
+    return lst
 #print( getGameTypes())
 
+def getPlayers():
+    x = db.prepare("SELECT id, username, displayname FROM \"users\";")()
+
+    lst = list()
+
+    for i in x:
+        i = list(i)
+        lst.append({'id':i[0], 'username':i[1], 'displayname':i[2]})
+        
+    return lst
 

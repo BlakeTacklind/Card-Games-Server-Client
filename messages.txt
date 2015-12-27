@@ -7,6 +7,8 @@
 22: user name already exists
 
 30: change display name
+31: change display name successful
+32: change display name failed
 
 50: get other players
 
@@ -19,11 +21,25 @@
 122: no game data to get
 
 150: create new game (id, type, players)
+150: create new game success
+150: create new game fail
+
+160: get game types
+161: get game types success
+162: get game types fail
+
+170: get players
+171: get players success
+172: get players fail
 
 200: get game zones (cards with visiblity considered)
 210: get zone contents (cards without visibility considerations)
 
 
 
-
+# cards/zone manipulation either return the same number for success or 999 for failure
+999: failed card op
 1000> card/zone manipulations
+
+1000: Suffle Zone {zone number}
+1010: move card in position to front of zone {zone from, position, zone to}

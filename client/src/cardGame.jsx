@@ -12,13 +12,20 @@ var CardGame = React.createClass({
 
 	gotMessageCallback:function(reqNum, args){
 		var output = this.refs.onScreen.handleMessage(reqNum, args);
-		if(output != null)
+		if(output != null){
+			// playerdata.onWin = output;
 			this.setState({currScreen: output});
-		
+		}
 	},
 
 	getInitialState : function(){
 		database.init(this.gotMessageCallback);
+		if(typeof(window.localStorage) !== "undefined"){
+			console.log("Works")
+		}
+		else{
+			console.log("Doesn't works")
+		}
 		// console.log(database.isopen);
 		return {currScreen: "WelcomeScreen"};
 	},

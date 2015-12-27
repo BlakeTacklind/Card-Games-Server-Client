@@ -26,10 +26,10 @@ var WelcomeScreen = React.createClass({
     return null
   },
   getInitialState: function() {
-    this.props.messageFunc
-    return {value: '', mes: ''};
+    return {value: String(window.localStorage.prevLogin), mes: ''};
   },
   handleChange: function(event) {
+    window.localStorage.prevLogin = event.target.value;
     this.setState({value: event.target.value});
   },
   loginClicked: function(){
@@ -38,7 +38,7 @@ var WelcomeScreen = React.createClass({
   },
   addPLayer: function(){
     // console.log("button pushed");
-    database.sendRequest(20, {username: this.state.value});
+    database.sendRequest(20, {id: playerdata.userid, name: this.state.value});
   },
   render: function() {
     var value = this.state.value;
@@ -50,9 +50,6 @@ var WelcomeScreen = React.createClass({
               <h4>{this.state.mes}</h4>
            </div>;
   },
-  getSelf: function(){
-    return <WelcomeScreen />;
-  }
 });
 
 module.exports = WelcomeScreen;
