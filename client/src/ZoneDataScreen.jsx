@@ -3,6 +3,7 @@ var React = require('react');
 var playerdata = require('./playerdata.js');
 var database = require('./databaseHook.js')
 var CardList = require('./CardList.jsx')
+var B4C = require('./ButtonsForCards.jsx')
 
 var ZoneDataScreen = React.createClass({
 	// requestZoneData: function(i){
@@ -31,8 +32,17 @@ var ZoneDataScreen = React.createClass({
 	render: function(){
 		return <div>
 				<h1>{playerdata.games[playerdata.selGame].name} - {playerdata.gameData[playerdata.zoneSelected].name}</h1>
-				<CardList data={this.state.cards} />
+				<B4C ref="buttons" setParentState={this.props.setParentState}/>
+				<CardList data={this.state.cards} clicked={this.moveCardToZone}/>
 			</div>;
+	},
+	getCardFromZone: function(){
+
+	},
+	moveCardToZone: function(){
+		if(this.refs.buttons.getSelectedState()){
+			this.props.setParentState("ZoneSelectorCardPlace")
+		}
 	},
 });
 

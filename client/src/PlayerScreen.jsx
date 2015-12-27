@@ -1,6 +1,6 @@
 'use strict';
 var React = require('react');
-var playerdata = require('./playerdata.js');
+// var playerdata = require('./playerdata.js');
 var database = require('./databaseHook.js')
 
 //Handler for once logged in
@@ -10,8 +10,9 @@ var PlayerScreen = React.createClass({
 		return null
 	},
 	render: function(){
+		var name = (String(window.sessionStorage.displayname) == null) ? String(window.sessionStorage.username) : String(window.sessionStorage.displayname);
 		return <div>
-				<h1>{playerdata.name()}</h1>
+				<h1>{name}</h1>
 				<button onClick={this.getGames}>Games</button>
 			</div>;
 	},

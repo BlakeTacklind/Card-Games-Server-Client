@@ -12,7 +12,7 @@ var GameListScreen = React.createClass({
 
 	},
 	getInitialState : function(){
-		database.sendRequest(100, {id: playerdata.userid});
+		database.sendRequest(100, {id: Number(window.sessionStorage.userid)});
 		// console.log(database.isopen);
 		return {games: null};
 	},
@@ -29,8 +29,9 @@ var GameListScreen = React.createClass({
 		return null
 	},
 	render: function(){
+		var name = (String(window.sessionStorage.displayname) == null) ? String(window.sessionStorage.username) : String(window.sessionStorage.displayname);
 		return <div>
-				<h1>{playerdata.name() + "'s Games"}</h1>
+				<h1>{name + "'s Games"}</h1>
 				<GameList data={this.state.games} gameReq={this.requestGameData} />
 			</div>;
 	},

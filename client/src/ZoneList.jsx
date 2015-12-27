@@ -9,7 +9,12 @@ var ZoneList = React.createClass({
 		if(this.props.data == null) return null
 		return (<div>
 				{this.props.data.map(function(curr, i){
-						return <ZoneListElement data={curr} key={i} clicked={function(){this.props.zoneReq(curr.id); playerdata.zoneSelected = i}.bind(this)} />
+						return <ZoneListElement data={curr} key={i} 
+							clicked={function(){
+								this.props.zoneReq(curr.id); 
+								if(playerdata.zoneSelected == -1)
+									playerdata.zoneSelected = i;
+							}.bind(this)} />
 					}.bind(this))
 				}
 				</div>
