@@ -8,6 +8,7 @@ var GameListScreen = require('./GameListScreen.jsx')
 var GameDataScreen = require('./GameDataScreen.jsx')
 var ZoneDataScreen = require('./ZoneDataScreen.jsx')
 var ZoneSelectorScreen = require('./ZoneSelectorScreen.jsx')
+var NewGameScreen = require('./NewGameScreen.jsx')
 
 var CardGame = React.createClass({
 
@@ -56,6 +57,8 @@ var CardGame = React.createClass({
 						{posF: 0, fromZ: i, toZ:playerdata.gameData[playerdata.zoneSelected].id, posT: 0}); 
 						this.setState({currScreen: "ZoneData"});
 					}.bind(this)} />;
+		if(this.state.currScreen == "NewGameScreen")
+			return <NewGameScreen ref="onScreen" setParentState={this.setScreen} />;
 		return null
 	},
 

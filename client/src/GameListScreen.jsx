@@ -18,7 +18,6 @@ var GameListScreen = React.createClass({
 	},
 
 	handleMessage: function(reqNum, args){
-		// console.log("test 1")
 		if (reqNum == 102)
 			return null
 		if (reqNum == 101){
@@ -32,6 +31,7 @@ var GameListScreen = React.createClass({
 		var name = (String(window.sessionStorage.displayname) == null) ? String(window.sessionStorage.username) : String(window.sessionStorage.displayname);
 		return <div>
 				<h1>{name + "'s Games"}</h1>
+				<button onClick={function(){this.props.setParentState("NewGameScreen")}.bind(this)}>New Game</button>
 				<GameList data={this.state.games} gameReq={this.requestGameData} />
 			</div>;
 	},

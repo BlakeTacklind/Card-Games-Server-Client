@@ -1,7 +1,7 @@
-
 import json
 from DBqueries import *
 
+# print(getGameTypes())
 # print('zonesInGame ', updateDisplayName(22, "Blakey"))
 
 def getReturnMessage(payload):
@@ -48,85 +48,52 @@ def getReturnMessage(payload):
 	return json.dumps(message).encode('utf8')
 
 def handleLoginRequest(args):
-	ret = dict()
 	res = login(args["username"])
 	
 	if res == None:
-		ret['rq'] = 12
-		ret['ag'] = args
-	else:
-		ret['rq'] = 11
-		ret['ag'] = res
+		return {'rq':12, 'ag':args}
 
-	return ret
+	return {'rq':11, 'ag':res}
 
 def handleNewPlayerRequest(args):
-	ret = dict()
 	res = addUser(args["username"])
 	
-	if res == 0:
-		ret['rq'] = 22
-		ret['ag'] = args
-	else:
-		ret['rq'] = 21
-		ret['ag'] = res
+	if res == None:
+		return {'rq':22, 'ag':args}
 
-	return ret
+	return {'rq':21, 'ag':res}
 
 def handleUpdatePlayerRequest(args):
-	ret = dict()
 	res = updateDisplayName(args["id"], args["name"])
 	
-	if res == False:
-		ret['rq'] = 32
-		ret['ag'] = args
-	else:
-		ret['rq'] = 31
-		ret['ag'] = res
+	if res == None:
+		return {'rq':32, 'ag':args}
 
-	return ret
+	return {'rq':31, 'ag':res}
 
 def handleGamesRequest(args):
-	ret = dict()
 	res = playerGamesBad(args["id"])
-	# print(res)
 
 	if res == None:
-		ret['rq'] = 102
-		ret['ag'] = res
-	else:
-		ret['rq'] = 101
-		ret['ag'] = res
+		return {'rq':102, 'ag':res}
 
-	return ret
+	return {'rq':101, 'ag':res}
 
 def handleGameDataRequest(args):
-	ret = dict()
 	res = zonesInGame(args["id"])
-	# print(res)
 
 	if res == None:
-		ret['rq'] = 122
-		ret['ag'] = res
-	else:
-		ret['rq'] = 121
-		ret['ag'] = res
+		return {'rq':122, 'ag':res}
 
-	return ret
+	return {'rq':121, 'ag':res}
 
 def handleZoneDataRequest(args):
-	ret = dict()
 	res = getZoneContents(args["id"])
-	# print(res)
-
+	
 	if res == None:
-		ret['rq'] = 212
-		ret['ag'] = res
-	else:
-		ret['rq'] = 211
-		ret['ag'] = res
+		return {'rq':212, 'ag':res}
 
-	return ret
+	return {'rq':211, 'ag':res}
 
 def handleGetPlayers(args):
 	return {'rq': 171, 'ag':getPlayers()}
