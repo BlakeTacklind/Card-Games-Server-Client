@@ -2,7 +2,8 @@ import json
 from DBqueries import *
 
 # print(getGameTypes())
-# print('zonesInGame ', updateDisplayName(22, "Blakey"))
+
+# print(json.dumps(getGameTypes()).encode('utf8'))
 
 def getReturnMessage(payload):
 	message = json.loads(payload.decode('utf8'))

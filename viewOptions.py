@@ -9,7 +9,7 @@ def getZoneContents(zoneNum):
 
     y = db.prepare("SELECT x, cards.id, cards.name, cards.info, cards.resource from generate_series(1,$1::integer) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $2::integer;")(x[0][0], zoneNum)
 
-    map(lambda *i: {'pos':i[0], 'id':i[1], 'name':i[2], 'info':i[3], 'resource':i[4]}, y)
+    x = [{'pos':i[0], 'id':i[1], 'name':i[2], 'info':i[3], 'resource':i[4]} for i in y]
         
     return y
 
@@ -21,7 +21,7 @@ def playerGamesBad(playerID):
     if not x:
         return None
 
-    map(lambda *i: {'id':i[0], 'name':i[1], 'type':i[2]}, x)
+    x = [{'id':i[0], 'name':i[1], 'type':i[2]} for i in x]
         
     return x
 
@@ -32,7 +32,7 @@ def zonesInGame(gameNum):
     if not x:
         return None
 
-    map(lambda *i: {'id':i[0], 'name':i[1], 'owner':i[2], 'ownerd':i[3], 'owneru':i[4], 'ds':i[5]}, x)
+    x = [{'id':i[0], 'name':i[1], 'owner':i[2], 'ownerd':i[3], 'owneru':i[4], 'ds':i[5]} for i in x]
         
     return x
 
@@ -48,14 +48,14 @@ def zonesInGameByPlayer(playerID, gameNum):
 def getGameTypes():
     x = db.prepare("SELECT id, name, info FROM \"gameTypes\";")()
 
-    map(lambda *i: {'id':i[0], 'name':i[1], 'info':i[2]}, x)
+    x= [{'id':i[0], 'name':i[1], 'info':i[2]} for i in x]
         
     return x
 
 def getPlayers():
     x = db.prepare("SELECT id, username, displayname FROM \"users\";")()
 
-    map(lambda *i: {'id':i[0], 'username':i[1], 'displayname':i[2]}, x)
+    x = [{'id':i[0], 'username':i[1], 'displayname':i[2]} for i in x]
         
     return x
 
