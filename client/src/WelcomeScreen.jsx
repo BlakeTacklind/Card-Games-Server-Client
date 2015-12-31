@@ -7,7 +7,7 @@ var WelcomeScreen = React.createClass({
   handleMessage: function (reqNum, args){
     if(reqNum == 11){
       window.sessionStorage.username = args["username"]
-      window.sessionStorage.userid = args["id"]
+      window.sessionStorage.userid = Number(args["id"])
       window.sessionStorage.displayname = args["displayname"]
       return "PlayerScreen";
     }
@@ -16,7 +16,7 @@ var WelcomeScreen = React.createClass({
     }
     if(reqNum == 21){
       window.sessionStorage.username = args["username"]
-      window.sessionStorage.userid = args["id"]
+      window.sessionStorage.userid = Number(args["id"])
       window.sessionStorage.displayname = args["displayname"]
       return "PlayerScreen";
     }

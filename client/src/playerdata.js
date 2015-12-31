@@ -11,6 +11,7 @@ var playerdata = {
 	gameData: null,
 	zoneSelected: -1,
 	zoneData: null,
+	playersSelected: [],
 }
 
 

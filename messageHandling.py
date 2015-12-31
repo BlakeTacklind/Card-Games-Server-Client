@@ -8,7 +8,7 @@ from DBqueries import *
 def getReturnMessage(payload):
 	message = json.loads(payload.decode('utf8'))
 
-	# print(message)
+	print(message)
 	rq = message['rq']
 
 	if rq == 1010:

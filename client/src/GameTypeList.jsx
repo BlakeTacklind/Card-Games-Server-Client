@@ -27,7 +27,7 @@ var GameTypeList = React.createClass({
 		}
 		return (<div>
 			{this.state.data.map(function(curr, i){
-					return <GameTypeElement data={curr} key={i} clicked={function(){window.sessionStorage.selGameType=curr; this.props.setParentState("player")}.bind(this)}/>
+					return <GameTypeElement data={curr} key={i} clicked={function(){window.sessionStorage.selGameType=Number(curr.id); this.props.setParentState("player")}.bind(this)}/>
 				}.bind(this))
 			}
 			</div>

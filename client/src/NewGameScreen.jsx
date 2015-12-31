@@ -4,6 +4,7 @@ var playerdata = require('./playerdata.js');
 var database = require('./databaseHook.js')
 var GameTypeList = require('./GameTypeList.jsx')
 var PlayersSelector = require('./PlayersSelector.jsx')
+var NameGame = require('./NameGame.jsx')
 
 var NewGame = React.createClass({
 	getInitialState : function(){
@@ -25,12 +26,13 @@ var NewGame = React.createClass({
 	},
 	render: function(){
 		var List;
-		if(this.state.onList == "type"){
-				// console.log("test")
-				List = <GameTypeList ref="currList" setParentState={this.setParentState}/>
-			}
+		if(this.state.onList == "type")
+			List = <GameTypeList ref="currList" setParentState={this.setParentState}/>
 		else if(this.state.onList == "player")
-			List = <PlayersSelector ref="currList" setParentState={this.props.setParentState}/>
+			List = <PlayersSelector ref="currList" setParentState={this.setParentState}/>
+		else if(this.state.onList == "name")
+			List = <NameGame ref="currList" setParentState={this.props.setParentState} />
+
 		return <div>
 				<h1>New Game</h1>
 				{List}
