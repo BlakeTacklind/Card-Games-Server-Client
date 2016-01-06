@@ -1,14 +1,28 @@
 'use strict';
 var React = require('react');
 var database = require('./databaseHook.js');
+var Router = require('react-router').Router
+var Route = require('react-router').Route
+var Link = require('react-router').Link
+var browserHistory = require('react-router').browserHistory 
 // var playerdata = require('./playerdata');
 
-var WelcomeScreen = React.createClass({
+const WelcomeScreen = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+  // componentWillMount() {
+  //   this.context.router.setRouteLeaveHook(
+  //     this.props.route,
+  //     this.routerWillLeave
+  //   )
+  // },
   handleMessage: function (reqNum, args){
     if(reqNum == 11){
       window.sessionStorage.username = args["username"]
       window.sessionStorage.userid = Number(args["id"])
       window.sessionStorage.displayname = args["displayname"]
+      this.context.router.push('/p/username');
       return "PlayerScreen";
     }
     if(reqNum == 12){
@@ -18,6 +32,7 @@ var WelcomeScreen = React.createClass({
       window.sessionStorage.username = args["username"]
       window.sessionStorage.userid = Number(args["id"])
       window.sessionStorage.displayname = args["displayname"]
+      this.context.router.push('/p/username');
       return "PlayerScreen";
     }
     if(reqNum == 22){

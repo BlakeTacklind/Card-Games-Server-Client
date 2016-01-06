@@ -25,10 +25,10 @@ var GameTypeList = React.createClass({
 		if(this.state.data == null)
 			return null
 
-		var data = this.state.data.map(function(curr, i){
-					if(curr.id != window.sessionStorage.userid)
-						return {value: curr.id, label: curr.username}
-				})
+		// var data = this.state.data.map(function(curr, i){
+		// 			if(curr.id != window.sessionStorage.userid)
+		// 				return {value: curr.id, label: curr.username}
+		// 		})
 			
 
 		return (
