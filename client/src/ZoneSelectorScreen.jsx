@@ -11,6 +11,7 @@ var ZoneSelector = React.createClass({
 	// },
 	getInitialState : function(){
 		database.sendRequest(120, {id: playerdata.userid});
+		console.log(this.props.testprop)
 		// console.log(database.isopen);
 		return {zones: playerdata.gameData};
 	},

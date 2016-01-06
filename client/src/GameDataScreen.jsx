@@ -5,9 +5,17 @@ var database = require('./databaseHook.js')
 var ZoneList = require('./ZoneList.jsx')
 
 var GameDataScreen = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+  componentDidMount: function(){
+    // console.log("change")
+    database.callback = this.handleMessage
+  },
 	requestZoneData: function(i){
 		// playerdata.zoneSelected = i;
-		this.props.setParentState("ZoneData")
+		// this.props.setParentState("ZoneData")
+		this.context.router.push('/z/'+i)
 		// console.log("sending request "+i)
 		// database.sendRequest(210, {id: i})
 

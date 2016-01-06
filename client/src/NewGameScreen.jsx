@@ -25,17 +25,18 @@ var NewGame = React.createClass({
 		return this.refs.currList.handleMessage(reqNum, args)
 	},
 	render: function(){
-		var List;
-		if(this.state.onList == "type")
-			List = <GameTypeList ref="currList" setParentState={this.setParentState}/>
-		else if(this.state.onList == "player")
-			List = <PlayersSelector ref="currList" setParentState={this.setParentState}/>
-		else if(this.state.onList == "name")
-			List = <NameGame ref="currList" setParentState={this.props.setParentState} />
+		// var List;
+		// if(this.state.onList == "type")
+		// 	List = <GameTypeList ref="currList" setParentState={this.setParentState}/>
+		// else if(this.state.onList == "player")
+		// 	List = <PlayersSelector ref="currList" setParentState={this.setParentState}/>
+		// else if(this.state.onList == "name")
+		// 	List = <NameGame ref="currList" setParentState={this.props.setParentState} />
 
 		return <div>
 				<h1>New Game</h1>
-				{List}
+				<GameTypeList />
+				<PlayersSelector />
 			</div>;
 	},
 	setParentState: function(state){

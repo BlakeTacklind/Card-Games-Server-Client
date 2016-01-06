@@ -1,4 +1,3 @@
-'use strict';
 var React = require('react');
 var playerdata = require('./playerdata.js');
 var database = require('./databaseHook.js')
@@ -12,9 +11,16 @@ var ZoneDataScreen = React.createClass({
 	// 	database.sendRequest(210, {id: i})
 
 	// },
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+  componentDidMount: function(){
+    console.log("change")
+    database.callback = this.handleMessage
+		database.sendRequest(210, {id: playerdata.gameData[playerdata.zoneSelected].id});
+  },
 	getInitialState : function(){
 		// console.log("sending "+playerdata.gameData[playerdata.zoneSelected].id);
-		database.sendRequest(210, {id: playerdata.gameData[playerdata.zoneSelected].id});
 		return {cards: null};
 	},
 
@@ -32,7 +38,7 @@ var ZoneDataScreen = React.createClass({
 	render: function(){
 		return <div>
 				<h1>{playerdata.games[playerdata.selGame].name} - {playerdata.gameData[playerdata.zoneSelected].name}</h1>
-				<B4C ref="buttons" setParentState={this.props.setParentState}/>
+				<B4C ref="buttons" />
 				<CardList data={this.state.cards} clicked={this.moveCardToZone}/>
 			</div>;
 	},
@@ -41,7 +47,8 @@ var ZoneDataScreen = React.createClass({
 	},
 	moveCardToZone: function(){
 		if(this.refs.buttons.getSelectedState()){
-			this.props.setParentState("ZoneSelectorCardPlace")
+			this.context.router.push('/zones/place')
+			// this.props.setParentState("ZoneSelectorCardPlace")
 		}
 	},
 });

@@ -2,6 +2,9 @@
 var React = require('react');
 
 var Buttons = React.createClass({
+  componentDidMount: function(){
+    database.callback = this.handleMessage
+  },
 	getInitialState: function(){
 		return {selecting: false}
 	},
@@ -21,7 +24,7 @@ var Buttons = React.createClass({
 		this.setState({selecting: this.state.selecting == false})
 	},
 	clickerTakeCard: function(){
-		this.props.setParentState("ZoneSelectorTakeCard")
+		this.context.router.push('/zones/take')
 	},
 	getSelectedState: function(){
 		return this.state.selecting;

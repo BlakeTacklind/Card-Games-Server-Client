@@ -5,8 +5,16 @@ var database = require('./databaseHook.js')
 var GameList = require('./GameList.jsx')
 
 var GameListScreen = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+  componentDidMount: function(){
+    // console.log("change")
+    database.callback = this.handleMessage
+  },
 	requestGameData: function(i){
-		this.props.setParentState("GameData")
+		this.context.router.push('/g/'+i)
+		// this.props.setParentState("GameData")
 		// console.log("sending request "+i)
 		database.sendRequest(120, {id: i})
 
@@ -31,7 +39,7 @@ var GameListScreen = React.createClass({
 		var name = (String(window.sessionStorage.displayname) == null) ? String(window.sessionStorage.username) : String(window.sessionStorage.displayname);
 		return <div>
 				<h1>{name + "'s Games"}</h1>
-				<button onClick={function(){this.props.setParentState("NewGameScreen")}.bind(this)}>New Game</button>
+				<button onClick={function(){this.context.router.push('/newgame')}.bind(this)}>New Game</button>
 				<GameList data={this.state.games} gameReq={this.requestGameData} />
 			</div>;
 	},

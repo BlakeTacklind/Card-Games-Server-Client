@@ -16,22 +16,32 @@ var ZoneSelectorScreen = require('./ZoneSelectorScreen.jsx')
 var NewGameScreen = require('./NewGameScreen.jsx')
 
 const CardGame = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
 	gotMessageCallback:function(reqNum, args){
-		var output = this.refs.onScreen.handleMessage(reqNum, args);
-		if(output != null){
-			this.setState({currScreen: output});
-		}
+		// var output = this.refs.onScreen.handleMessage(reqNum, args);
+
+		console.log("Test 2")
+		// if(this.props.children != null)
+		// 	this.props.children.type.prototype.handleMessage(reqNum, args)
+		// if(output != null){
+		// 	this.setState({currScreen: output});
+		// }
 	},
 
-	getInitialState : function(){
-		database.init(this.gotMessageCallback);
+	// getInitialState : function(){
 
-		return {currScreen: "WelcomeScreen"};
+	// 	return {currScreen: "WelcomeScreen"};
+	// },
+	componentDidMount: function(){
+		database.init();
+		if(this.props.route.path=="/")
+			this.context.router.replace('/login')
 	},
-
 	render: function(){
-		return <div>{this.props.children || <WelcomeScreen />}</div>;
+		return <div>{this.props.children}</div>;
 		// return (
 		// 	<Router history={browserHistory}>
 		// 		<Route path="/" component={WelcomeScreen} />

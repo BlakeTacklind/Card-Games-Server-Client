@@ -22,9 +22,11 @@ var database = {
    sendRequest: function(i, args){
       this.sendMessage(getRequest(i, args));
    },
-
-   init: function(callback){
-
+   callback: function(req, args){
+      console.log("No call back set")
+   },
+   init: function(){
+      // callback=cb;
       socket = new WebSocket("ws://127.0.0.1:11337");
       socket.binaryType = "arraybuffer";
 
@@ -39,9 +41,9 @@ var database = {
          if (typeof e.data == "string") {
             out = JSON.parse(e.data);
             console.log("Text message received: " + e.data);
-            callback(out['rq'], out['ag']);
+            this.callback(out['rq'], out['ag']);
          }
-      }
+      }.bind(this)
 
       socket.onclose = function(e) {
          console.log("Connection closed.");

@@ -17,12 +17,20 @@ const WelcomeScreen = React.createClass({
   //     this.routerWillLeave
   //   )
   // },
+  test(){
+    console.log("test")
+  },
+  componentDidMount: function(){
+    // console.log("change")
+    database.callback = this.handleMessage
+  },
   handleMessage: function (reqNum, args){
+    console.log("test")
     if(reqNum == 11){
       window.sessionStorage.username = args["username"]
       window.sessionStorage.userid = Number(args["id"])
       window.sessionStorage.displayname = args["displayname"]
-      this.context.router.push('/p/username');
+      this.context.router.push('/p/'+window.sessionStorage.username);
       return "PlayerScreen";
     }
     if(reqNum == 12){

@@ -2,11 +2,13 @@
 var render = require('react-dom').render;
 var React = require('react');
 
-var Router = require('react-router').Router
-var Redirect = require('react-router').Redirect
-var Route = require('react-router').Route
-var Link = require('react-router').Link
-var browserHistory = require('react-router').browserHistory 
+import {Router, Redirect, Route, Link, browserHistory} from 'react-router'
+
+// var Router = require('react-router').Router
+// var Redirect = require('react-router').Redirect
+// var Route = require('react-router').Route
+// var Link = require('react-router').Link
+// var browserHistory = require('react-router').browserHistory 
 // var RouterContext = require('react-router').RouterContext 
 
 const CardGame = require('./CardGame.jsx');
@@ -37,18 +39,24 @@ var NoPage = React.createClass({
 	
 render((
 	<Router history={browserHistory}>
-			<Route path="/" component={CardGame} >
-				<Route path="login" component={WelcomeScreen} />
-				<Route path="p/:name" component={PlayerScreen} />
-				<Route path="*" component={NoPage} />
-			</Route>
+		<Route path="/" component={CardGame} >
+			<Route path="login" component={WelcomeScreen} />
+			<Route path="p/:name" component={PlayerScreen} />
+			<Route path="p/:name/games" component={GameListScreen} />
+			<Route path="g/:id" component={GameDataScreen} />
+			<Route path="z/:id" component={ZoneDataScreen} />
+			<Route path="newgame" component={NewGameScreen} />
+			<Route path="zones/place" component={ZoneSelectorScreen} testprop="haha"/>
+			<Route path="zones/take" component={ZoneSelectorScreen} />
+			<Route path="*" component={NoPage} />
+		</Route>
 	</Router>
 	),
   document.getElementById('main')
 );
 
 			// <Route path="(player/)games" component={GameListScreen} />
-			// <Route path="game/:id" component={GameDataScreen} />
-			// <Route path="zone/:id" component={ZoneDataScreen} />
+			// <Route path="g/:id" component={GameDataScreen} />
+			// <Route path="z/:id" component={ZoneDataScreen} />
 			// <Route path="zones" component={ZoneSelectorScreen} />
 			// <Route path="newGame" component={NewGameScreen} />
