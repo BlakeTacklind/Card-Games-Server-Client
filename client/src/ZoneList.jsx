@@ -1,7 +1,6 @@
 'use strict';
 var React = require('react');
 
-var playerdata = require('./playerdata.js');
 var ZoneListElement = require('./ZoneListElement.jsx')
 
 var ZoneList = React.createClass({
@@ -11,9 +10,7 @@ var ZoneList = React.createClass({
 				{this.props.data.map(function(curr, i){
 						return <ZoneListElement data={curr} key={i} 
 							clicked={function(){
-								this.props.zoneReq(curr.id, curr.name); 
-								// if(playerdata.zoneSelected == -1)
-								// 	playerdata.zoneSelected = i;
+								this.props.zoneReq(curr.id, curr.name);
 							}.bind(this)} />
 					}.bind(this))
 				}

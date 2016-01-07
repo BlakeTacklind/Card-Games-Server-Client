@@ -1,6 +1,6 @@
 'use strict';
 var React = require('react');
-var playerdata = require('./playerdata.js');
+var clientdata = require('./clientdata.js');
 var database = require('./databaseHook.js')
 var ZoneList = require('./ZoneList.jsx')
 
@@ -8,21 +8,20 @@ var ZoneSelector = {
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
+  componentDidMount: function(){
+		database.sendRequest(120, {id: Number(window.sessionStorage.gameSelectedId)});
+    database.callback = this.handleMessage
+  },
 	getInitialState : function(){
-		database.sendRequest(120, {id: playerdata.userid});
-		console.log(this.props.myName)
-		// console.log(database.isopen);
-		return {zones: playerdata.gameData};
+		return {zones: clientdata.zoneList};
 	},
 
 	handleMessage: function(reqNum, args){
-		// console.log("test 1")
 		if (reqNum == 122)
 			return null
 		if (reqNum == 121){
-			// console.log("test 2")
-			playerdata.gameData = args;
-			this.setState({zones: playerdata.gameData});
+			clientdata.zoneList = args;
+			this.setState({zones: clientdata.zoneList});
 		}
 		return null
 	},

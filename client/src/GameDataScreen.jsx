@@ -10,6 +10,7 @@ var GameDataScreen = React.createClass({
   },
   componentDidMount: function(){
     // console.log("change")
+		database.sendRequest(120, {id: Number(window.sessionStorage.gameSelectedId)});
     database.callback = this.handleMessage
   },
 	requestZoneData: function(id, name){
@@ -19,17 +20,13 @@ var GameDataScreen = React.createClass({
 		this.context.router.push('/z/'+id)
 	},
 	getInitialState : function(){
-		// database.sendRequest(120, {id: playerdata.userid});
-		// console.log(database.isopen);
 		return {zones: clientdata.zoneList};
 	},
 
 	handleMessage: function(reqNum, args){
-		// console.log("test 1")
 		if (reqNum == 122)
 			return null
 		if (reqNum == 121){
-			// console.log("test 2")
 			clientdata.zoneList = args;
 			this.setState({zones: clientdata.zoneList});
 		}
@@ -37,7 +34,7 @@ var GameDataScreen = React.createClass({
 	},
 	render: function(){
 		return <div>
-				<h1>{window.sessionStorage.gameSelectedName}</h1>
+				<h1>{String(window.sessionStorage.gameSelectedName)}</h1>
 				<ZoneList data={this.state.zones} zoneReq={this.requestZoneData} />
 			</div>;
 	},

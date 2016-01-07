@@ -5,27 +5,16 @@ var Router = require('react-router').Router
 var Route = require('react-router').Route
 var Link = require('react-router').Link
 var browserHistory = require('react-router').browserHistory 
-// var playerdata = require('./playerdata');
 
 const WelcomeScreen = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
-  },
-  // componentWillMount() {
-  //   this.context.router.setRouteLeaveHook(
-  //     this.props.route,
-  //     this.routerWillLeave
-  //   )
-  // },
-  test(){
-    console.log("test")
   },
   componentDidMount: function(){
     // console.log("change")
     database.callback = this.handleMessage
   },
   handleMessage: function (reqNum, args){
-    console.log("test")
     if(reqNum == 11){
       window.sessionStorage.username = args["username"]
       window.sessionStorage.userid = Number(args["id"])

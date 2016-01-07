@@ -1,5 +1,5 @@
 module.exports = {
-	myGames: {},
-	zoneList: {},
-	cards: {},
+	myGames: null,
+	zoneList: null,
+	cards: null,
 }

@@ -10,7 +10,7 @@ var GameList = React.createClass({
 				{this.props.data.map(function(curr, i){
 						return (<CardViewer card={curr} key={i} 
 							clicked={function(){
-									window.sessionStorage.cardPosition = curr; 
+									window.sessionStorage.cardPosition = i; 
 									this.props.clicked();
 								}.bind(this)
 							} />)

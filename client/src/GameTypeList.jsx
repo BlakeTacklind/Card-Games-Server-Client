@@ -1,13 +1,10 @@
-'use strict';
 var React = require('react');
-var playerdata = require('./playerdata.js');
 var database = require('./databaseHook.js')
 var GameTypeElement = require('./GameTypeElement.jsx')
 
 var GameTypeList = React.createClass({
 	getInitialState : function(){
 		database.sendRequest(160, {});
-		// console.log(database.isopen);
 		return {data: null};
 	},
 
@@ -15,7 +12,6 @@ var GameTypeList = React.createClass({
 		if (reqNum == 162)
 			return null
 		if (reqNum == 161){
-			console.log("got message")
 			this.setState({data: args})
 		}
 		return null
@@ -26,12 +22,11 @@ var GameTypeList = React.createClass({
 			return null
 		}
 		return (<div>
-			{this.state.data.map(function(curr, i){
-					return <GameTypeElement data={curr} key={i} clicked={function(){window.sessionStorage.selGameType=Number(curr.id); this.props.setParentState("player")}.bind(this)}/>
-				}.bind(this))
+			{this.state.data.map(
+				function(curr, i){
+					return (<GameTypeElement data={curr} key={"t"+i} clicked={function(){this.props.selection(curr.id)}.bind(this)} />)}.bind(this))
 			}
-			</div>
-		)
+			</div>)
 	},
 });
 
