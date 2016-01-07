@@ -1,5 +1,6 @@
 'use strict';
 var React = require('react');
+var database = require('./databaseHook.js')
 
 var Buttons = React.createClass({
   componentDidMount: function(){
@@ -24,7 +25,7 @@ var Buttons = React.createClass({
 		this.setState({selecting: this.state.selecting == false})
 	},
 	clickerTakeCard: function(){
-		this.context.router.push('/zones/take')
+		this.props.router.push('/zones/take')
 	},
 	getSelectedState: function(){
 		return this.state.selecting;

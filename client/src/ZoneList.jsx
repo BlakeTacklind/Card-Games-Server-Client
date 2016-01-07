@@ -11,9 +11,9 @@ var ZoneList = React.createClass({
 				{this.props.data.map(function(curr, i){
 						return <ZoneListElement data={curr} key={i} 
 							clicked={function(){
-								this.props.zoneReq(curr.id); 
-								if(playerdata.zoneSelected == -1)
-									playerdata.zoneSelected = i;
+								this.props.zoneReq(curr.id, curr.name); 
+								// if(playerdata.zoneSelected == -1)
+								// 	playerdata.zoneSelected = i;
 							}.bind(this)} />
 					}.bind(this))
 				}

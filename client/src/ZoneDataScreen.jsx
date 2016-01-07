@@ -5,19 +5,13 @@ var CardList = require('./CardList.jsx')
 var B4C = require('./ButtonsForCards.jsx')
 
 var ZoneDataScreen = React.createClass({
-	// requestZoneData: function(i){
-	// 	this.props.setParentState("ZoneData")
-	// 	// console.log("sending request "+i)
-	// 	database.sendRequest(210, {id: i})
-
-	// },
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
   componentDidMount: function(){
+		database.sendRequest(210, {id: playerdata.gameData[playerdata.zoneSelected].id});
     console.log("change")
     database.callback = this.handleMessage
-		database.sendRequest(210, {id: playerdata.gameData[playerdata.zoneSelected].id});
   },
 	getInitialState : function(){
 		// console.log("sending "+playerdata.gameData[playerdata.zoneSelected].id);
@@ -38,12 +32,9 @@ var ZoneDataScreen = React.createClass({
 	render: function(){
 		return <div>
 				<h1>{playerdata.games[playerdata.selGame].name} - {playerdata.gameData[playerdata.zoneSelected].name}</h1>
-				<B4C ref="buttons" />
+				<B4C ref="buttons" router={this.context.router}/>
 				<CardList data={this.state.cards} clicked={this.moveCardToZone}/>
 			</div>;
-	},
-	getCardFromZone: function(){
-
 	},
 	moveCardToZone: function(){
 		if(this.refs.buttons.getSelectedState()){

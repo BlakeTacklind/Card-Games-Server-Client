@@ -17,7 +17,7 @@ app.use(webpackDevMiddleware(webpack(WebpackConfig), {
 app.get("/", express.static(__dirname+"\\dist"))
 app.get('*', function(req, res){
 // 	res.send('Answer is: '+req.originalUrl)
-	// res.sendfile(express.static(__dirname+"\\dist"))
+	// res.sendFile(express.static(__dirname+"\\dist\\index.html"))
 	res.redirect('/')
 })
 

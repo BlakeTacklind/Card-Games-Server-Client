@@ -1,6 +1,6 @@
 'use strict';
 var React = require('react');
-var playerdata = require('./playerdata.js');
+var clientdata = require('./clientdata.js')
 var database = require('./databaseHook.js')
 var ZoneList = require('./ZoneList.jsx')
 
@@ -12,18 +12,16 @@ var GameDataScreen = React.createClass({
     // console.log("change")
     database.callback = this.handleMessage
   },
-	requestZoneData: function(i){
-		// playerdata.zoneSelected = i;
-		// this.props.setParentState("ZoneData")
-		this.context.router.push('/z/'+i)
-		// console.log("sending request "+i)
-		// database.sendRequest(210, {id: i})
+	requestZoneData: function(id, name){
+		window.sessionStorage.zoneSelectedId = id;
+		window.sessionStorage.zoneSelectedName = name;
 
+		this.context.router.push('/z/'+id)
 	},
 	getInitialState : function(){
 		// database.sendRequest(120, {id: playerdata.userid});
 		// console.log(database.isopen);
-		return {zones: null};
+		return {zones: clientdata.zoneList};
 	},
 
 	handleMessage: function(reqNum, args){
@@ -32,14 +30,14 @@ var GameDataScreen = React.createClass({
 			return null
 		if (reqNum == 121){
 			// console.log("test 2")
-			playerdata.gameData = args;
-			this.setState({zones: playerdata.gameData});
+			clientdata.zoneList = args;
+			this.setState({zones: clientdata.zoneList});
 		}
 		return null
 	},
 	render: function(){
 		return <div>
-				<h1>{playerdata.games[playerdata.selGame].name}</h1>
+				<h1>{window.sessionStorage.gameSelectedName}</h1>
 				<ZoneList data={this.state.zones} zoneReq={this.requestZoneData} />
 			</div>;
 	},

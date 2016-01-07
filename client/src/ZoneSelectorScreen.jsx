@@ -4,14 +4,13 @@ var playerdata = require('./playerdata.js');
 var database = require('./databaseHook.js')
 var ZoneList = require('./ZoneList.jsx')
 
-var ZoneSelector = React.createClass({
-	// zoneClicked: function(i){
-
-	// 	this.props.setParentState("ZoneData")
-	// },
+var ZoneSelector = {
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 	getInitialState : function(){
 		database.sendRequest(120, {id: playerdata.userid});
-		console.log(this.props.testprop)
+		console.log(this.props.myName)
 		// console.log(database.isopen);
 		return {zones: playerdata.gameData};
 	},
@@ -29,10 +28,10 @@ var ZoneSelector = React.createClass({
 	},
 	render: function(){
 		return <div>
-				<h1>{this.props.name}</h1>
-				<ZoneList data={this.state.zones} zoneReq={this.props.zoneClicked} />
+				<h1>{this.myName}</h1>
+				<ZoneList data={this.state.zones} zoneReq={this.zoneClicked} />
 			</div>;
 	},
-});
+};
 
 module.exports = ZoneSelector;

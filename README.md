@@ -28,7 +28,7 @@ Found in: client/
 Handles serving html files
 Set up:
 ```
-npm install
+> npm install
 ```
 
 Run with:
