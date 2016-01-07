@@ -5,6 +5,9 @@ var GameTypeList = require('./GameTypeList.jsx')
 var PlayersSelector = require('./PlayersSelector.jsx')
 
 var NewGame = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 	getInitialState : function(){
 		this.playersSelected = [Number(window.sessionStorage.userid),]
 		this.gameType = -1
@@ -21,7 +24,7 @@ var NewGame = React.createClass({
 				<h1>New Game</h1>
 				<GameTypeList ref="GamesList" selection={this.selection}/>
 				<PlayersSelector ref="PlayerList" handleChecked={this.handleChecked}/>
-				<button>Finish and Name</button>
+				<button onClick={this.doneClicked}>Finish and Name</button>
 			</div>;
 	},
 	handleChecked: function(e, id){
@@ -37,6 +40,14 @@ var NewGame = React.createClass({
 	},
 	selection: function(i){
 		this.gameType = i;
+	},
+	doneClicked: function(){
+		let name = prompt('Name the Game')
+
+		if(name!=null){
+			database.sendRequest(150, {players: this.playersSelected, type: this.gameType, name: name});
+			this.context.router.push('/p/'+String(window.sessionStorage.username)+'/games')
+		}
 	},
 });
 

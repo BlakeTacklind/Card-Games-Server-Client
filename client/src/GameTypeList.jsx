@@ -12,6 +12,9 @@ var GameTypeList = React.createClass({
 		if (reqNum == 162)
 			return null
 		if (reqNum == 161){
+			if(args.length > 0)
+				this.props.selection(args[0].id)
+			
 			this.setState({data: args})
 		}
 		return null
