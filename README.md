@@ -48,3 +48,24 @@ Set up:
 ```
 
 visit page: [http://localhost:8081](http://localhost:8081)
+
+## TODO
+
+- **Sanitize inputs**
+- check for legal variables on server
+- url -> variables (no magic strings)
+- List hold states instead of props
+- add deal function
+- implement display name change
+- implement delete game
+- make url enquires work
+- add board (multi zone display)
+- make connections more modular
+- add css
+- add notifications (& chat)
+- add login tokens and passwords
+- add cheat prevention (game rules)
+- add friends system
+- add filter for new game page
+- better history management (certain variables also held in history)
+
