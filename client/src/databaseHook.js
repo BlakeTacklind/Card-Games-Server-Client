@@ -19,6 +19,15 @@ var database = {
       }
    },
 
+   sendPlainMessage: function(obj){
+      if (isopen) {
+         socket.send(obj);
+         // console.log("Something sent");     
+      } else {
+         console.log("Not Connected");
+      }
+   },
+
    sendRequest: function(i, args){
       this.sendMessage(getRequest(i, args));
    },

@@ -1,4 +1,3 @@
-'use strict';
 var React = require('react');
 var database = require('./databaseHook.js')
 var GameTypeList = require('./GameTypeList.jsx')
@@ -14,7 +13,6 @@ var NewGame = React.createClass({
     database.callback = this.handleMessage
 		return {onList: "type"};
 	},
-
 	handleMessage: function(reqNum, args){
 		this.refs.GamesList.handleMessage(reqNum, args)
 		this.refs.PlayerList.handleMessage(reqNum, args)
@@ -44,11 +42,14 @@ var NewGame = React.createClass({
 	doneClicked: function(){
 		let name = prompt('Name the Game')
 
-		if(name!=null){
+		if(name!=null && this.isValid(name)){
 			database.sendRequest(150, {players: this.playersSelected, type: this.gameType, name: name});
 			this.context.router.push('/p/'+String(window.sessionStorage.username)+'/games')
 		}
 	},
+  isValid: function (str){
+    return !/[^a-zA-Z0-9_ ]/g.test(str);
+  }
 });
 
 module.exports = NewGame;

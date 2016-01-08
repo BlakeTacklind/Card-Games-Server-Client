@@ -1,4 +1,3 @@
-'use strict';
 var React = require('react');
 var database = require('./databaseHook.js');
 var Router = require('react-router').Router
@@ -38,32 +37,38 @@ const WelcomeScreen = React.createClass({
     return null
   },
   getInitialState: function() {
-    return {value: String(window.localStorage.prevLogin), mes: 'Do not use special characters, please'};
+    let val = "";
+    if(String(window.localStorage.prevLogin) != null)
+      val = String(window.localStorage.prevLogin);
+
+    return {value: val, mes: ''};
   },
   handleChange: function(event) {
-    // window.localStorage.prevLogin = event.target.value;
-    this.setState({value: event.target.value});
+    if(this.isValid(event.target.value))
+      this.setState({value: event.target.value, mes: ''});
+    else
+      this.setState({mes: "Alphanumberic characters only"});
   },
   loginClicked: function(){
-    // console.log("button pushed");
     window.localStorage.prevLogin = this.state.value;
     database.sendRequest(10, {username: this.state.value});
   },
   addPLayer: function(){
-    // console.log("button pushed");
     window.localStorage.prevLogin = this.state.value;
-    database.sendRequest(20, {name: this.state.value});
+    database.sendRequest(20, {username: this.state.value});
   },
   render: function() {
-    var value = this.state.value;
     return <div>
               <h1>Welcome</h1>
-              <input type="text" value={value} onChange={this.handleChange} />
+              <input type="text" value={this.state.value} onChange={this.handleChange} />
               <button onClick={this.loginClicked}>Log In</button>
               <button onClick={this.addPLayer}>New Log in</button>
               <h4>{this.state.mes}</h4>
            </div>;
   },
+  isValid: function (str){
+    return !/[^a-zA-Z0-9_]/g.test(str);
+  }
 });
 
 module.exports = WelcomeScreen;
