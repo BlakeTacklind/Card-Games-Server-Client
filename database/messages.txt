@@ -35,6 +35,8 @@
 200: get game zones (cards with visiblity considered)
 210: get zone contents (cards without visibility considerations)
 
+300: Zone updated
+
 
 
 # cards/zone manipulation either return the same number for success or 999 for failure

@@ -17,12 +17,17 @@ var ZoneDataScreen = React.createClass({
 	},
 
 	handleMessage: function(reqNum, args){
-		if (reqNum == 212)
+		if(reqNum == 300){
+			database.sendRequest(210, {id: Number(window.sessionStorage.zoneSelectedId)});
 			return null
+		}
 		if (reqNum == 211){
 			clientdata.cards = args;
 			this.setState({cards: clientdata.cards});
+			return null
 		}
+		if (reqNum == 212)
+			return null
 		return null
 	},
 	render: function(){

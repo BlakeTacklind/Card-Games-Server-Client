@@ -270,3 +270,6 @@ def moveCardSimple(args):
 	if moveCardBetweenZones(posF, fromZ, toZ, posT):
 		return {'rq':1010,'ag':None}
 	return {'rq':999,'ag':1010}
+
+def zoneNotifyString(zid):
+	return json.dumps({'rq':300, 'ag':zid}).encode('utf8')
