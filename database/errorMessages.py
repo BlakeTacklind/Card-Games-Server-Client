@@ -13,5 +13,8 @@ class ERROR:
 		return {'error':-55, 'request': rq, 'argument': arg}
 
 	def InvalidCharARG(rq, arg):
+		return {'error':-60, 'request': rq, 'argument': arg}
+
+	def UnsupportedRQ(rq):
 		return {'error':-100, 'request': rq, 'argument': arg}
 

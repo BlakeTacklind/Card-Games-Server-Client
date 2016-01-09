@@ -1,7 +1,7 @@
 import json
-from DBqueries import *
-from safety import *
 from errorMessages import ERROR
+from safety import *
+from DBqueries import *
 
 def getReturnMessage(payload):
 	#need to check if messag is a json
@@ -65,7 +65,7 @@ def getReturnMessage(payload):
 
 	# print(message.ag)
 
-	return json.dumps(message).encode('utf8')
+	return json.dumps(ERROR.UnsupportedRQ(rq)).encode('utf8')
 
 def handleLoginRequest(args):
 	if 'username' not in args:

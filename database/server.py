@@ -1,28 +1,9 @@
-from messageHandling import getReturnMessage
-from autobahn.asyncio.websocket import WebSocketServerProtocol, WebSocketServerFactory
+from serverProtocol import MyServerProtocol
+from autobahn.asyncio.websocket import WebSocketServerFactory
 
 import asyncio
 
 myPort = 11337
-
-
-class MyServerProtocol(WebSocketServerProtocol):
-
-  # @asyncio.coroutine
-	def onConnect(self, request):
-		print("Client connecting: {0}".format(request.peer))
-		# self.sendMessage("print me?")
-
-	def onOpen(self):
-		print("WebSocket connection open.")
-
-  # @asyncio.coroutine
-	def onMessage(self, payload, isBinary):
-		self.sendMessage(getReturnMessage(payload))
-  
-
-	def onClose(self, wasClean, code, reason):
-		print("WebSocket connection closed: {0}".format(reason))
 
 if __name__ == '__main__':
 

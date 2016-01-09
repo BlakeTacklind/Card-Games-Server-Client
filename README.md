@@ -52,7 +52,7 @@ visit page: [http://localhost:8081](http://localhost:8081)
 ## TODO
 
 - url -> variables (no magic strings)
-- List hold states instead of props
+- change List hold data as states instead of props
 - add deal function
 - implement display name change
 - implement delete game
@@ -66,5 +66,10 @@ visit page: [http://localhost:8081](http://localhost:8081)
 - add cheat prevention (game rules)
 - add friends system
 - add filter for new game page
-- better history management (certain variables also held in history)
 
+## To Learn
+
+- better history management (certain variables also held in history)
+- expose functions of children (react router). Used in message handleing
+- sharing data in python server
+- communication between websocket handlers

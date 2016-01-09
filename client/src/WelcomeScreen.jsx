@@ -10,7 +10,6 @@ const WelcomeScreen = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   componentDidMount: function(){
-    // console.log("change")
     database.callback = this.handleMessage
   },
   handleMessage: function (reqNum, args){
