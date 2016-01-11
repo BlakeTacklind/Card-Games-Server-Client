@@ -2,6 +2,7 @@ var React = require('react');
 var database = require('./databaseHook.js')
 var GameTypeList = require('./GameTypeList.jsx')
 var PlayersSelector = require('./PlayersSelector.jsx')
+const Messages = require('./Messages.js')
 
 var NewGame = React.createClass({
   contextTypes: {
@@ -43,7 +44,7 @@ var NewGame = React.createClass({
 		let name = prompt('Name the Game')
 
 		if(name!=null && this.isValid(name)){
-			database.sendRequest(150, {players: this.playersSelected, type: this.gameType, name: name});
+			database.sendRequest(Messages.CreateNewGame, {players: this.playersSelected, type: this.gameType, name: name});
 			this.context.router.push('/p/'+String(window.sessionStorage.username)+'/games')
 		}
 	},

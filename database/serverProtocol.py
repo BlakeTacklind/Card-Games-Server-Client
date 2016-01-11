@@ -3,6 +3,7 @@ import json
 from errorMessages import ERROR
 from safety import *
 from autobahn.asyncio.websocket import WebSocketServerProtocol
+from messages import Messages
 
 class MyServerProtocol(WebSocketServerProtocol):
 	users = set()
@@ -39,62 +40,62 @@ class MyServerProtocol(WebSocketServerProtocol):
 	def handleRQ(self, rq, args):
 
 		# Large Switch for different requests from client
-		if rq == 1010:
+		if rq == Messages["MoveCardRQ"]:
 			ret = moveCardSimple(args)
 			self.sendMessage(json.dumps(ret).encode('utf8'))
-			if 'rq' in ret and ret['rq'] is not 999:
+			if 'rq' in ret and ret['rq'] is not Messages["ErrorInCardOperation"]:
 				MyServerProtocol.notifyZonesOfUpdate([args['fromZ'], args['toZ']], self)
 			return
 
-		if rq == 1000:
+		if rq == Messages["SuffleZoneRQ"]:
 			ret = handleShuffleZone(args)
 			self.sendMessage(json.dumps(ret).encode('utf8'))
-			if 'rq' in ret and ret['rq'] is not 999:
+			if 'rq' in ret and ret['rq'] is not Messages["ErrorInCardOperation"]:
 				MyServerProtocol.notifyZonesOfUpdate([args['zone']], self)
 			return
 
-		if rq == 10:
+		if rq == Messages["LoginReq"]:
 			ret = handleLoginRequest(args)
 			self.sendMessage(json.dumps(ret).encode('utf8'))
-			if 'rq' in ret and ret['rq'] is not 12:
+			if 'rq' in ret and ret['rq'] is not Messages["LoginFail"]:
 				self.addToUsers()
 			return
 
-		if rq == 20:
+		if rq == Messages["NewPlayer"]:
 			ret = handleNewPlayerRequest(args)
 			self.sendMessage(json.dumps(ret).encode('utf8'))
-			if 'rq' in ret and ret['rq'] is not 22:
+			if 'rq' in ret and ret['rq'] is not Messages["NewPlayerFail"]:
 				self.addToUsers()
 			return
 
-		if rq == 30:
+		if rq == Messages["ChangeNameRQ"]:
 			self.sendMessage(json.dumps(handleUpdatePlayerRequest(args)).encode('utf8'))
 			return
 
-		if rq == 100:
+		if rq == Messages["GetGameList"]:
 			self.sendMessage(json.dumps(handleGamesRequest(args)).encode('utf8'))
 			return
 
-		if rq == 120:
+		if rq == Messages["GetGameData"]:
 			self.sendMessage(json.dumps(handleGameDataRequest(args)).encode('utf8'))
 			return
 
-		if rq == 210:
+		if rq == Messages["GetGameZoneAllData"]:
 			ret = handleZoneDataRequest(args)
 			self.sendMessage(json.dumps(ret).encode('utf8'))
-			if 'rq' in ret and ret['rq'] is not 212:
+			if 'rq' in ret and ret['rq'] is not Messages["GetGameZoneAllDataFail"]:
 				self.addToZone(args['id'])
 			return
 
-		if rq == 150:
+		if rq == Messages["CreateNewGame"]:
 			self.sendMessage(json.dumps(handleCreateGame(args)).encode('utf8'))
 			return
 
-		if rq == 160:
+		if rq == Messages["GetGameTypes"]:
 			self.sendMessage(json.dumps(handleGetGameTypes(args)).encode('utf8'))
 			return
 
-		if rq == 170:
+		if rq == Messages["GetAllOtherPlayers"]:
 			self.sendMessage(json.dumps(handleGetPlayers(args)).encode('utf8'))
 			return
 

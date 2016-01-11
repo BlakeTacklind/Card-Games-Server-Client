@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var database=require('./databaseHook.js')
+const Messages = require('./Messages.js')
 
 var ZoneListElement = React.createClass({
 	render: function(){
@@ -10,7 +11,7 @@ var ZoneListElement = React.createClass({
 			</div>;
 	},
 	shuffleZone: function(){
-		database.sendRequest(1000, {'zone':this.props.data.id});
+		database.sendRequest(Messages.SuffleZoneRQ, {'zone':this.props.data.id});
 	},
 });
 

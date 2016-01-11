@@ -3,13 +3,14 @@ var React = require('react');
 var clientdata = require('./clientdata.js');
 var database = require('./databaseHook.js')
 var GameList = require('./GameList.jsx')
+const Messages = require('./Messages.js')
 
 var GameListScreen = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
   componentDidMount: function(){
-		database.sendRequest(100, {id: Number(window.sessionStorage.userid)});
+		database.sendRequest(Messages.GetGameList, {id: Number(window.sessionStorage.userid)});
     database.callback = this.handleMessage
   },
 	requestGameData: function(id, name){
@@ -22,9 +23,9 @@ var GameListScreen = React.createClass({
 	},
 
 	handleMessage: function(reqNum, args){
-		if (reqNum == 102)
+		if (reqNum == Messages.GetGameListFail)
 			return null
-		if (reqNum == 101){
+		if (reqNum == Messages.GetGameListSuccess){
 			clientdata.myGames = args;
 			this.setState({games: clientdata.myGames});
 		}

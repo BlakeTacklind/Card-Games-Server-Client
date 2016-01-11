@@ -2,18 +2,19 @@
 var React = require('react');
 var database = require('./databaseHook.js')
 var PlayerElement = require('./PlayerElement.jsx')
+const Messages = require('./Messages.js')
 
 var GameTypeList = React.createClass({
 	getInitialState : function(){
-		database.sendRequest(170, {});
+		database.sendRequest(Messages.GetAllOtherPlayers, {});
 		
 		return {data: null};
 	},
 
 	handleMessage: function(reqNum, args){
-		if (reqNum == 172)
+		if (reqNum == Messages.GetAllOtherPlayersFail)
 			return null
-		if (reqNum == 171){
+		if (reqNum == Messages.GetAllOtherPlayersSuccess){
 			this.setState({data: args})
 		}
 		return null

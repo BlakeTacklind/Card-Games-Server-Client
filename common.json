@@ -1,0 +1,83 @@
+{
+"messagesCodes": {
+		"LoginReq": 10,
+		"comment_LoginReq": "Login - get id and names",
+		"LoginSuccess": 11,
+		"comment_LoginSuccess": "return Login data - data",
+		"LoginFail": 12,
+		"comment_LoginFail": "failed login - name",
+
+		"NewPlayer": 20,
+		"comment_NewPlayer": "Create New Player - get id and names)",
+		"NewPlayerSuccess": 21,
+		"comment_NewPlayerSuccess": "Successfully Created Player",
+		"NewPlayerFail": 22,
+		"comment_NewPlayerFail": "user name already exists",
+
+		"ChangeNameRQ": 30,
+		"comment_ChangeNameRQ": "change display name",
+		"ChangeNameRQSuccess": 31,
+		"comment_ChangeNameRQSuccess": "change display name successful",
+		"ChangeNameRQFail": 32,
+		"comment_ChangeNameRQFail": "change display name failed",
+
+		"GetOtherPlayers": 50,
+		"comment_GetOtherPlayers": "get other players",
+
+		"GetGameList": 100,
+		"comment_GetGameList": "get games list - id, type, players)",
+		"GetGameListSuccess": 101,
+		"comment_GetGameListSuccess": "return players games",
+		"GetGameListFail": 102,
+		"comment_GetGameListFail": "not a player",
+
+		"GetGameData": 120,
+		"comment_GetGameData": "Get Game Data",
+		"GetGameDataSuccess": 121,
+		"comment_GetGameDataSuccess": "return game Data",
+		"GetGameDataFail": 122,
+		"comment_GetGameDataFail": "no game data to get",
+
+		"CreateNewGame": 150,
+		"comment_CreateNewGame": "create new game - id, type, players)",
+		"CreateNewGameSuccess": 151,
+		"comment_CreateNewGameSuccess": "create new game success",
+		"CreateNewGameFail": 152,
+		"comment_CreateNewGameFail": "create new game fail",
+
+		"GetGameTypes": 160,
+		"comment_GetGameTypes": "get game types",
+		"GetGameTypesSuccess": 161,
+		"comment_GetGameTypesSuccess": "get game types success",
+		"GetGameTypesFail": 162,
+		"comment_GetGameTypesFail": "get game types fail",
+
+		"GetAllOtherPlayers": 170,
+		"comment_GetAllOtherPlayers": "get players",
+		"GetAllOtherPlayersSuccess": 171,
+		"comment_GetAllOtherPlayersSuccess": "get players success",
+		"GetAllOtherPlayersFail": 172,
+		"comment_GetAllOtherPlayersFail": "get players fail",
+
+		"GetGameZone": 200,
+		"comment_GetGameZone": "get game zones - cards with visiblity considered)",
+
+		"GetGameZoneAllData": 210,
+		"comment_GetGameZoneAllData": "get zone contents - cards without visibility considerations)",
+		"GetGameZoneAllDataSuccess": 211,
+		"comment_GetGameZoneAllDataSuccess": "Return success for 210",
+		"GetGameZoneAllDataFail": 212,
+		"comment_GetGameZoneAllDataFail": "return fail for 210",
+
+		"ZoneUpdateNot": 300,
+		"comment_ZoneUpdateNot": "Zone updated Notification",
+
+		"ErrorInCardOperation": 999,
+		"comment_ErrorInCardOperation": "failed card op",
+
+		"SuffleZoneRQ": 1000,
+		"comment_SuffleZoneRQ": "Suffle Zone {zone number}",
+		"MoveCardRQ": 1010,
+		"comment_MoveCardRQ": "move card in position to front of zone {zone from, position, zone to}"
+	}
+}

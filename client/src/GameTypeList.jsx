@@ -1,17 +1,18 @@
 var React = require('react');
 var database = require('./databaseHook.js')
 var GameTypeElement = require('./GameTypeElement.jsx')
+const Messages = require('./Messages.js')
 
 var GameTypeList = React.createClass({
 	getInitialState : function(){
-		database.sendRequest(160, {});
+		database.sendRequest(Messages.GetGameTypes, {});
 		return {data: null};
 	},
 
 	handleMessage: function(reqNum, args){
-		if (reqNum == 162)
+		if (reqNum == Messages.GetGameTypesFail)
 			return null
-		if (reqNum == 161){
+		if (reqNum == Messages.GetGameTypesSuccess){
 			if(args.length > 0)
 				this.props.selection(args[0].id)
 			

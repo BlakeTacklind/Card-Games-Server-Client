@@ -3,6 +3,7 @@ var React = require('react');
 var clientdata = require('./clientdata.js')
 var database = require('./databaseHook.js')
 var ZoneList = require('./ZoneList.jsx')
+const Messages = require('./Messages.js')
 
 var GameDataScreen = React.createClass({
   contextTypes: {
@@ -10,7 +11,7 @@ var GameDataScreen = React.createClass({
   },
   componentDidMount: function(){
     // console.log("change")
-		database.sendRequest(120, {id: Number(window.sessionStorage.gameSelectedId)});
+		database.sendRequest(Messages.GetGameData, {id: Number(window.sessionStorage.gameSelectedId)});
     database.callback = this.handleMessage
   },
 	requestZoneData: function(id, name){
@@ -24,9 +25,9 @@ var GameDataScreen = React.createClass({
 	},
 
 	handleMessage: function(reqNum, args){
-		if (reqNum == 122)
+		if (reqNum == Messages.GetGameDataFail)
 			return null
-		if (reqNum == 121){
+		if (reqNum == Messages.GetGameDataSuccess){
 			clientdata.zoneList = args;
 			this.setState({zones: clientdata.zoneList});
 		}

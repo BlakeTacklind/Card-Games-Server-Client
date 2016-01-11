@@ -4,6 +4,7 @@ var Router = require('react-router').Router
 var Route = require('react-router').Route
 var Link = require('react-router').Link
 var browserHistory = require('react-router').browserHistory 
+const Messages = require('./Messages.js');
 
 const WelcomeScreen = React.createClass({
   contextTypes: {
@@ -13,24 +14,24 @@ const WelcomeScreen = React.createClass({
     database.callback = this.handleMessage
   },
   handleMessage: function (reqNum, args){
-    if(reqNum == 11){
+    if(reqNum == Messages.LoginSuccess){
       window.sessionStorage.username = args["username"]
       window.sessionStorage.userid = Number(args["id"])
       window.sessionStorage.displayname = args["displayname"]
       this.context.router.push('/p/'+window.sessionStorage.username);
       return "PlayerScreen";
     }
-    if(reqNum == 12){
+    if(reqNum == Messages.LoginFail){
       this.setState({mes: "bad log in"})
     }
-    if(reqNum == 21){
+    if(reqNum == Messages.NewPlayerSuccess){
       window.sessionStorage.username = args["username"]
       window.sessionStorage.userid = Number(args["id"])
       window.sessionStorage.displayname = args["displayname"]
       this.context.router.push('/p/username');
       return "PlayerScreen";
     }
-    if(reqNum == 22){
+    if(reqNum == Messages.NewPlayerFail){
       this.setState({mes: "username already exists"})
     }
     return null
@@ -50,11 +51,12 @@ const WelcomeScreen = React.createClass({
   },
   loginClicked: function(){
     window.localStorage.prevLogin = this.state.value;
-    database.sendRequest(10, {username: this.state.value});
+    console.log("test "+Messages.LoginReq)
+    database.sendRequest(Messages.LoginReq, {username: this.state.value});
   },
   addPLayer: function(){
     window.localStorage.prevLogin = this.state.value;
-    database.sendRequest(20, {username: this.state.value});
+    database.sendRequest(Messages.NewPlayer, {username: this.state.value});
   },
   render: function() {
     return <div>

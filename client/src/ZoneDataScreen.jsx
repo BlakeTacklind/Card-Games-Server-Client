@@ -3,6 +3,7 @@ var clientdata = require('./clientdata.js');
 var database = require('./databaseHook.js')
 var CardList = require('./CardList.jsx')
 var B4C = require('./ButtonsForCards.jsx')
+const Messages = require('./Messages.js');
 
 var ZoneDataScreen = React.createClass({
   contextTypes: {
@@ -10,23 +11,23 @@ var ZoneDataScreen = React.createClass({
   },
   componentDidMount: function(){
     database.callback = this.handleMessage
-		database.sendRequest(210, {id: Number(window.sessionStorage.zoneSelectedId)});
+		database.sendRequest(Messages.GetGameZoneAllData, {id: Number(window.sessionStorage.zoneSelectedId)});
   },
 	getInitialState : function(){
 		return {cards: null};
 	},
 
 	handleMessage: function(reqNum, args){
-		if(reqNum == 300){
-			database.sendRequest(210, {id: Number(window.sessionStorage.zoneSelectedId)});
+		if(reqNum == Messages.ZoneUpdateNot){
+			database.sendRequest(Messages.GetGameZoneAllData, {id: Number(window.sessionStorage.zoneSelectedId)});
 			return null
 		}
-		if (reqNum == 211){
+		if (reqNum == Messages.GetGameZoneAllDataSuccess){
 			clientdata.cards = args;
 			this.setState({cards: clientdata.cards});
 			return null
 		}
-		if (reqNum == 212)
+		if (reqNum == Messages.GetGameZoneAllDataFail)
 			return null
 		return null
 	},

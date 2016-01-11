@@ -1,6 +1,4 @@
-'use strict';
 var React = require('react');
-var database=require('./databaseHook.js')
 
 var ZoneListElement = React.createClass({
 	render: function(){

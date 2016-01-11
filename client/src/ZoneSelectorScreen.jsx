@@ -2,6 +2,7 @@
 var React = require('react');
 var clientdata = require('./clientdata.js');
 var database = require('./databaseHook.js')
+const Messages = require('./Messages.js')
 var ZoneList = require('./ZoneList.jsx')
 
 var ZoneSelector = {
@@ -9,7 +10,7 @@ var ZoneSelector = {
     router: React.PropTypes.object.isRequired
   },
   componentDidMount: function(){
-		database.sendRequest(120, {id: Number(window.sessionStorage.gameSelectedId)});
+		database.sendRequest(Messages.GetGameData, {id: Number(window.sessionStorage.gameSelectedId)});
     database.callback = this.handleMessage
   },
 	getInitialState : function(){
@@ -17,9 +18,9 @@ var ZoneSelector = {
 	},
 
 	handleMessage: function(reqNum, args){
-		if (reqNum == 122)
+		if (reqNum == Messages.GetGameDataFail)
 			return null
-		if (reqNum == 121){
+		if (reqNum == Messages.GetGameDataSuccess){
 			clientdata.zoneList = args;
 			this.setState({zones: clientdata.zoneList});
 		}
