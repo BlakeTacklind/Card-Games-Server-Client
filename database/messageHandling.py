@@ -4,71 +4,6 @@ from safety import *
 from DBqueries import *
 from messages import Messages
 
-
-def getReturnMessage(payload):
-	#need to check if messag is a json
-	raw = payload.decode('utf8')
-
-	try:
-		message = json.loads(raw)
-	except ValueError:
-		return json.dumps(ERROR.badJSON).encode('utf8')
-
-	print(message)
-
-	#need to check if there IS a rq
-	if 'rq' in message:
-		rq = message['rq']
-	else:
-		return json.dumps(ERROR.noRQ).encode('utf8')
-
-	#need to check that rq is an int
-	if type(rq) is not int:
-		return json.dumps(ERROR.badTypeRQ).encode('utf8')
-
-	#need to check if there IS a ag
-	if 'ag' not in message:
-		return json.dumps(ERROR.noAG).encode('utf8')
-
-
-	# Large Switch for different requests from client
-	if rq == Messages["MoveCardRQ"]:
-		return json.dumps(moveCardSimple(message['ag'])).encode('utf8')
-
-	if rq == Messages["SuffleZoneRQ"]:
-		return json.dumps(handleShuffleZone(message['ag'])).encode('utf8')
-
-	if rq == Messages["LoginReq"]:
-		return json.dumps(handleLoginRequest(message['ag'])).encode('utf8')
-
-	if rq == Messages["NewPlayer"]:
-		return json.dumps(handleNewPlayerRequest(message['ag'])).encode('utf8')
-
-	if rq == Messages["ChangeNameRQ"]:
-		return json.dumps(handleUpdatePlayerRequest(message['ag'])).encode('utf8')
-
-	if rq == Messages["GetGameList"]:
-		return json.dumps(handleGamesRequest(message['ag'])).encode('utf8')
-
-	if rq == Messages["GetGameData"]:
-		return json.dumps(handleGameDataRequest(message['ag'])).encode('utf8')
-
-	if rq == Messages["GetGameZoneAllData"]:
-		return json.dumps(handleZoneDataRequest(message['ag'])).encode('utf8')
-
-	if rq == Messages["CreateNewGame"]:
-		return json.dumps(handleCreateGame(message['ag'])).encode('utf8')
-
-	if rq == Messages["GetGameTypes"]:
-		return json.dumps(handleGetGameTypes(message['ag'])).encode('utf8')
-
-	if rq == Messages["GetAllOtherPlayers"]:
-		return json.dumps(handleGetPlayers(message['ag'])).encode('utf8')
-
-	# print(message.ag)
-
-	return json.dumps(ERROR.UnsupportedRQ(rq)).encode('utf8')
-
 def handleLoginRequest(args):
 	if 'username' not in args:
 		return ERROR.missingARG(Messages["LoginReq"], 'username')
@@ -275,3 +210,36 @@ def moveCardSimple(args):
 
 def zoneNotifyString(zid):
 	return json.dumps({'rq':Messages["ZoneUpdateNot"], 'ag':zid}).encode('utf8')
+
+def dealCards(args):
+	if 'toZarr' not in args:
+		return ERROR.missingARG(Messages["dealCards"], 'toZarr')
+
+	toZarr = args["toZarr"]
+
+	if type(toZarr) is not list:
+		return ERROR.badTypeARG(Messages["dealCards"], 'toZarr')
+
+	if any((type(i) is not int for i in toZarr)):
+		return ERROR.badTypeARG(Messages["dealCards"], 'toZarr')
+
+	if 'fromZ' not in args:
+		return ERROR.missingARG(Messages["dealCards"], 'fromZ')
+
+	fromZ = args["fromZ"]
+
+	if type(fromZ) is not int:
+		return ERROR.badTypeARG(Messages["dealCards"], 'fromZ')
+
+	if 'num' not in args:
+		return ERROR.missingARG(Messages["dealCards"], 'num')
+
+	num = args["num"]
+
+	if type(num) is not int:
+		return ERROR.badTypeARG(Messages["dealCards"], 'num')
+
+	if deal(fromZ, toZarr, num):
+		return {'rq':Messages["DealCardsRQ"],'ag':None}
+	return {'rq':Messages["ErrorInCardOperation"],'ag':Messages["DealCardsRQ"]}
+

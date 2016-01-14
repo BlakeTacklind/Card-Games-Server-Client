@@ -241,3 +241,48 @@ def goMCIZ(gNum, owner, zNum, mF, mT):
         return False
 
     return moveCardInZone(game[zNum]["id"], mF, mT)
+
+def deal(fromZ, toZarr, num):
+    if fromZ in toZarr:
+        return False
+
+    dealtFromZone = db.prepare("SELECT cards FROM zones WHERE id = $1::integer;")(fromZ)
+    
+    if not dealtFromZone:
+        return False
+
+    dealtFromZone = list(dealtFromZone[0]["cards"])
+
+    if len(dealtFromZone) is 0:
+        return True
+
+    dealtToZones = list(map(getCardsFromZoneUnsafe, toZarr))
+
+    print(dealtToZones)
+
+    if any((i is None for i in dealtToZones)):
+        return False
+    
+    if num < 0 or num*len(toZarr) > len(dealtFromZone):
+        for i in range(0, len(dealtToZones)):
+            dealtToZones[i] += dealtFromZone[i:len(dealtFromZone):len(dealtToZones)]
+            db.prepare("UPDATE zones SET cards = $1::integer[] WHERE id = $2::integer;")(dealtToZones[i], toZarr[i])
+
+        db.prepare("UPDATE zones SET cards = $1::integer[] WHERE id = $2::integer;")([], fromZ)
+    else:
+        for i in range(0, len(dealtToZones)):
+            dealtToZones[i] += dealtFromZone[i:len(toZarr)*num:len(dealtToZones)]
+            db.prepare("UPDATE zones SET cards = $1::integer[] WHERE id = $2::integer;")(dealtToZones[i], toZarr[i])
+
+        db.prepare("UPDATE zones SET cards = $1::integer[] WHERE id = $2::integer;")(dealtFromZone[len(toZarr)*num:], fromZ)
+
+
+    # print(dealtToZones)
+
+    return True
+
+def getCardsFromZoneUnsafe(zid):
+    temp = db.prepare("SELECT cards FROM zones WHERE id = $1::integer;")(zid)
+    if not temp:
+        return None
+    return list(temp[0]["cards"])

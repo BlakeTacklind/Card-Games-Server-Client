@@ -47,6 +47,13 @@ class MyServerProtocol(WebSocketServerProtocol):
 				MyServerProtocol.notifyZonesOfUpdate([args['fromZ'], args['toZ']], self)
 			return
 
+		if rq == Messages["DealCardsRQ"]:
+			ret = dealCards(args)
+			self.sendMessage(json.dumps(ret).encode('utf8'))
+			if 'rq' in ret and ret['rq'] is not Messages["ErrorInCardOperation"]:
+				MyServerProtocol.notifyZonesOfUpdate([args['fromZ']]+args['toZarr'], self)
+			return
+
 		if rq == Messages["SuffleZoneRQ"]:
 			ret = handleShuffleZone(args)
 			self.sendMessage(json.dumps(ret).encode('utf8'))

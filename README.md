@@ -61,7 +61,7 @@ visit page: [http://localhost:8081](http://localhost:8081)
 - add board (multi zone display)
 - make connections more modular
 - add css
-- add notifications (& chat)
+- add chat
 - add login tokens and passwords
 - add cheat prevention (game rules)
 - add friends system

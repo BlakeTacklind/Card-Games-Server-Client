@@ -78,6 +78,8 @@
 		"SuffleZoneRQ": 1000,
 		"comment_SuffleZoneRQ": "Suffle Zone {zone number}",
 		"MoveCardRQ": 1010,
-		"comment_MoveCardRQ": "move card in position to front of zone {zone from, position, zone to}"
+		"comment_MoveCardRQ": "move card in position to front of zone {zone from, position, zone to}",
+		"DealCardsRQ": 1020,
+		"comment_DealCardsRQ": "deal x cards from one zone to specified zones"
 	}
 }
