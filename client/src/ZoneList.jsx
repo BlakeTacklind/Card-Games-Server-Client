@@ -10,8 +10,12 @@ var ZoneList = React.createClass({
 				{this.props.data.map(function(curr, i){
 						return <ZoneListElement data={curr} key={i} 
 							clicked={function(){
-								this.props.zoneReq(curr.id, curr.name);
-							}.bind(this)} />
+								this.props.zoneReq(curr.id, curr.name, curr.owner);
+							}.bind(this)} 
+							dealZone={function(){
+								this.props.dealZone(curr.id)
+							}.bind(this)}
+							buttons={true} />
 					}.bind(this))
 				}
 				</div>

@@ -4,7 +4,7 @@ var database = require('./databaseHook.js')
 var PlayerElement = require('./PlayerElement.jsx')
 const Messages = require('./Messages.js')
 
-var GameTypeList = React.createClass({
+var PlayerList = React.createClass({
 	getInitialState : function(){
 		database.sendRequest(Messages.GetAllOtherPlayers, {});
 		
@@ -43,4 +43,4 @@ var GameTypeList = React.createClass({
 	},
 });
 
-module.exports = GameTypeList;
+module.exports = PlayerList;

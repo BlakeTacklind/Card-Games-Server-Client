@@ -35,7 +35,7 @@ var NewGame = React.createClass({
 			if(index > -1)
 				this.playersSelected.splice(index, 1)
 		}
-		console.log(this.playersSelected)
+		// console.log(this.playersSelected)
 	},
 	selection: function(i){
 		this.gameType = i;

@@ -53,11 +53,11 @@ visit page: [http://localhost:8081](http://localhost:8081)
 
 - url -> variables (no magic strings)
 - change List hold data as states instead of props
-- add deal function
+- better multithreading on server
 - implement display name change
 - implement delete game
 - add reconnect (if disconnected)
-- make url enquires work
+- make url enquires work (new HTML server)
 - add board (multi zone display)
 - make connections more modular
 - add css
@@ -71,5 +71,3 @@ visit page: [http://localhost:8081](http://localhost:8081)
 
 - better history management (certain variables also held in history)
 - expose functions of children (react router). Used in message handleing
-- sharing data in python server
-- communication between websocket handlers
