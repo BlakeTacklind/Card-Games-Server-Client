@@ -13,6 +13,18 @@ def getZoneContents(zoneNum):
         
     return y
 
+def getZoneContentsAndExtra(zoneNum):
+    x = db.prepare("SELECT array_length(cards,1), owner from zones where id = $1::integer limit 1;")(zoneNum)
+
+    if not x:
+        return None, None
+
+    y = db.prepare("SELECT x, cards.id, cards.name, cards.info, cards.resource from generate_series(1,$1::integer) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $2::integer;")(x[0][0], zoneNum)
+
+    y = [{'pos':i[0], 'id':i[1], 'name':i[2], 'info':i[3], 'resource':i[4]} for i in y]
+        
+    return y, {'owner': x[0]['owner'], 'id':zoneNum}
+
 #get list of games the player is in
 #TODO: use the player's games list rather then search the whole games list
 def playerGamesBad(playerID):

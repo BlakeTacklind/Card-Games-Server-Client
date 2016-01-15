@@ -117,6 +117,22 @@ def handleZoneDataRequest(args):
 
 	return {'rq':Messages["GetGameZoneAllDataSuccess"], 'ag':res}
 
+def handleZoneDataRequestAndExtra(args):
+	if 'id' not in args:
+		return ERROR.missingARG(Messages["GetGameZoneAllData"], 'id'), None
+
+	uid = args["id"]
+
+	if type(uid) is not int:
+		return ERROR.badTypeARG(Messages["GetGameZoneAllData"], 'id'), None
+
+	res, extra = getZoneContentsAndExtra(uid)
+	
+	if res == None:
+		return {'rq':Messages["GetGameZoneAllDataFail"], 'ag':None}, None
+
+	return {'rq':Messages["GetGameZoneAllDataSuccess"], 'ag':res}, extra
+
 def handleGetPlayers(args):
 	return {'rq': Messages["GetAllOtherPlayersSuccess"], 'ag':getPlayers()}
 

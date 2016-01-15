@@ -66,6 +66,7 @@ class MyServerProtocol(WebSocketServerProtocol):
 			self.sendMessage(json.dumps(ret).encode('utf8'))
 			if 'rq' in ret and ret['rq'] is not Messages["LoginFail"]:
 				self.addToUsers()
+				self.playerid = ret['ag']['id']
 			return
 
 		if rq == Messages["NewPlayer"]:
@@ -87,11 +88,20 @@ class MyServerProtocol(WebSocketServerProtocol):
 			self.sendMessage(json.dumps(handleGameDataRequest(args)).encode('utf8'))
 			return
 
+		# if rq == Messages["GetGameZoneAllData"]:
+		# 	ret = handleZoneDataRequest(args)
+		# 	self.sendMessage(json.dumps(ret).encode('utf8'))
+		# 	if 'rq' in ret and ret['rq'] is not Messages["GetGameZoneAllDataFail"]:
+		# 		self.addToZone(args['id'])
+		# 	return
+
 		if rq == Messages["GetGameZoneAllData"]:
-			ret = handleZoneDataRequest(args)
+			ret, extra = handleZoneDataRequestAndExtra(args)
 			self.sendMessage(json.dumps(ret).encode('utf8'))
 			if 'rq' in ret and ret['rq'] is not Messages["GetGameZoneAllDataFail"]:
 				self.addToZone(args['id'])
+				if extra['owner'] is not self.playerid:
+					MyServerProtocol.notifyOfCheat(extra['owner'], extra['id'])
 			return
 
 		if rq == Messages["CreateNewGame"]:
@@ -118,6 +128,10 @@ class MyServerProtocol(WebSocketServerProtocol):
 					if user != player:
 						user.sendMessage(mes)
 
+	@classmethod
+	def notifyOfCheat(cls, zoneid, playerid):
+		print(str(zoneid)+' '+str(playerid))
+		return
 
 	#Non robust adding to set of users
 	def addToUsers(self):

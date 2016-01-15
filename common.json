@@ -72,6 +72,9 @@
 		"ZoneUpdateNot": 300,
 		"comment_ZoneUpdateNot": "Zone updated Notification",
 
+		"CheatNot": 310,
+		"comment_CheatNot": "potential cheating Notification",
+
 		"ErrorInCardOperation": 999,
 		"comment_ErrorInCardOperation": "failed card op",
 
