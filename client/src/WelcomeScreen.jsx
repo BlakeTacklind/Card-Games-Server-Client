@@ -51,7 +51,7 @@ const WelcomeScreen = React.createClass({
   },
   loginClicked: function(){
     window.localStorage.prevLogin = this.state.value;
-    console.log("test "+Messages.LoginReq)
+    
     database.sendRequest(Messages.LoginReq, {username: this.state.value});
   },
   addPLayer: function(){

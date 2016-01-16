@@ -101,7 +101,7 @@ class MyServerProtocol(WebSocketServerProtocol):
 			if 'rq' in ret and ret['rq'] is not Messages["GetGameZoneAllDataFail"]:
 				self.addToZone(args['id'])
 				if extra['owner'] is not self.playerid:
-					MyServerProtocol.notifyOfCheat(extra['owner'], extra['id'])
+					MyServerProtocol.notifyOfCheat(extra['id'], self.playerid)
 			return
 
 		if rq == Messages["CreateNewGame"]:
@@ -131,6 +131,7 @@ class MyServerProtocol(WebSocketServerProtocol):
 	@classmethod
 	def notifyOfCheat(cls, zoneid, playerid):
 		print(str(zoneid)+' '+str(playerid))
+		
 		return
 
 	#Non robust adding to set of users

@@ -36,9 +36,9 @@ def startGame(playerList, gameType, instanceName):
     numplayZones = len(t[0]["playerZones"])
 
     for i, username, displayname, games in p:
-        n = displayname
-        if not displayname:
-            n = username
+        # n = displayname
+        # if not displayname:
+        #     n = username
 
         tempZ = list()
 
@@ -83,7 +83,7 @@ def startGame(playerList, gameType, instanceName):
             i += 5
 
         elif t[i] == 4:
-            if len(t) < i + 2:
+            if len(t) < i + 3:
                 return "bad args!"
 
             zoneFrom = 0
@@ -92,14 +92,19 @@ def startGame(playerList, gameType, instanceName):
                 zoneFrom = pubid[t[i+1]]
             else:
                 print("can't draw from playerzones with init")
-            
-            if t[i+2] < len(pubid):
-                moveTopToBackOfZones(zoneFrom, pubid[t[i+2]])
-            else:
-                for lst in privzid:
-                    moveTopToBackOfZones( zoneFrom, lst[ t[i+2] - len(pubid) ] )
+                i += 4
+                continue
 
-            i += 3
+            num = t[i+3]
+
+            if t[i+2] < len(pubid):
+                deal(zoneFrom, [pubid[t[i+2]]], num)
+            elif t[i+2] < (len(pubid) + len(privzid)):
+                deal(zoneFrom, [lst[t[i+2] - len(pubid)] for lst in privzid], num)
+            else:
+                print("can't draw from a zone that doesnt exist!")
+
+            i += 4
 
         elif t[i] == 5:
             print("unsuported function!")
