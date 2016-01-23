@@ -18,10 +18,14 @@ var PlayerScreen = React.createClass({
 		return <div>
 				<h1>{name}</h1>
 				<button onClick={this.getGames}>Games</button>
+				<button onClick={this.getNotifications}>Messages</button>
 			</div>;
 	},
 	getGames: function(){
 		this.context.router.push('/p/'+String(window.sessionStorage.username)+'/games')
+	},
+	getNotifications: function(){
+		this.context.router.push('/p/'+String(window.sessionStorage.username)+'/messages')
 	},
 });
 

@@ -259,3 +259,19 @@ def dealCards(args):
 		return {'rq':Messages["DealCardsRQ"],'ag':None}
 	return {'rq':Messages["ErrorInCardOperation"],'ag':Messages["DealCardsRQ"]}
 
+def handleNotificationRequest(args):
+	if 'id' not in args:
+		return ERROR.missingARG(Messages["RequestMessages"], 'id')
+
+	uid = args["id"]
+
+	if type(uid) is not int:
+		return ERROR.badTypeARG(Messages["RequestMessages"], 'id')
+
+	ret = getPlayerNotifications(uid)
+	if ret is None:
+		return {'rq':Messages["RequestMessagesFail"],'ag':None}
+	return {'rq':Messages["RequestMessagesSuccess"],'ag':ret}
+
+def handleMarkReadRequest(args):
+	

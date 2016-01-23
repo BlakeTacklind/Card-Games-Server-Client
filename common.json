@@ -75,6 +75,13 @@
 		"MessageNot": 310,
 		"comment_MessageNot": "new message Notification",
 
+		"RequestMessages": 410,
+		"comment_RequestMessages": "new message Notification",
+		"RequestMessagesSuccess": 411,
+		"comment_RequestMessagesSuccess": "new message Notification",
+		"RequestMessagesFail": 412,
+		"comment_RequestMessagesFail": "new message Notification",
+
 		"ErrorInCardOperation": 999,
 		"comment_ErrorInCardOperation": "failed card op",
 

@@ -27,8 +27,6 @@ class MyServerProtocol(WebSocketServerProtocol):
 		
 
 	def onMessage(self, payload, isBinary):
-		# self.sendMessage(getReturnMessage(payload))
-		# MyServerProtocol.sendAllClients(getReturnMessage(payload))
 		res = self.unpackMessage(payload)
 		if res is None:
 			return
@@ -86,6 +84,10 @@ class MyServerProtocol(WebSocketServerProtocol):
 
 		if rq == Messages["GetGameData"]:
 			self.sendMessage(json.dumps(handleGameDataRequest(args)).encode('utf8'))
+			return
+
+		if rq == Messages["RequestMessages"]:
+			self.sendMessage(json.dumps(handleNotificationRequest(args)).encode('utf8'))
 			return
 
 		# if rq == Messages["GetGameZoneAllData"]:

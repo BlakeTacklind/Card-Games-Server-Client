@@ -13,6 +13,7 @@ var ZoneDataScreen = require('./ZoneDataScreen.jsx')
 var ZoneSelectorScreenPlace = require('./ZoneSelectorScreenPlace.jsx')
 var ZoneSelectorScreenTake = require('./ZoneSelectorScreenTake.jsx')
 var NewGameScreen = require('./NewGameScreen.jsx')
+var NotificationList = require('./NotificationListScreen.jsx')
 
 var database = require('./databaseHook.js')
 
@@ -40,6 +41,7 @@ render((
 			<Route path="login" component={WelcomeScreen} />
 			<Route path="p/:name" component={PlayerScreen} />
 			<Route path="p/:name/games" component={GameListScreen} />
+			<Route path="p/:name/messages" component={NotificationList} />
 			<Route path="g/:id" component={GameDataScreen} />
 			<Route path="z/:id" component={ZoneDataScreen} />
 			<Route path="newgame" component={NewGameScreen} />
