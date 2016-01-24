@@ -90,6 +90,14 @@ class MyServerProtocol(WebSocketServerProtocol):
 			self.sendMessage(json.dumps(handleNotificationRequest(args)).encode('utf8'))
 			return
 
+		if rq == Messages["MarkReadRequest"]:
+			self.sendMessage(json.dumps(handleMarkReadRequest(args)).encode('utf8'))
+			return
+
+		if rq == Messages["deleteNotificationRequest"]:
+			self.sendMessage(json.dumps(handleDeleteNotificationRequest(args)).encode('utf8'))
+			return
+
 		# if rq == Messages["GetGameZoneAllData"]:
 		# 	ret = handleZoneDataRequest(args)
 		# 	self.sendMessage(json.dumps(ret).encode('utf8'))
@@ -103,7 +111,7 @@ class MyServerProtocol(WebSocketServerProtocol):
 			if 'rq' in ret and ret['rq'] is not Messages["GetGameZoneAllDataFail"]:
 				self.addToZone(args['id'])
 				if extra['owner'] is not self.playerid:
-					MyServerProtocol.notifyOfCheat(extra['id'], self.playerid)
+					MyServerProtocol.notifyOfCheat(extra['id'], extra['owner'], self.playerid, extra['game'])
 			return
 
 		if rq == Messages["CreateNewGame"]:
@@ -131,10 +139,31 @@ class MyServerProtocol(WebSocketServerProtocol):
 						user.sendMessage(mes)
 
 	@classmethod
-	def notifyOfCheat(cls, zoneid, playerid):
+	def addNotificationAndNotify(cls, mes, frm, to):
+
+		addNotification(mes, frm, to)
+
+		for user in cls.users:
+			if user.playerid == to:
+				user.sendMessage(json.dumps({'rq': Messages['MessageNot'], 'ag': None}).encode('utf8'))
+
+		return
+
+	@classmethod
+	def notifyOfCheat(cls, zoneid, ownerid, playerid, gameId):
 		print(str(zoneid)+' '+str(playerid))
+
+		if ownerid is None:
+			for player in getPlayersInGame(gameId):
+				if player != playerid:
+					cls.addNotificationAndNotify("I may have cheated by looking at an unowned zone", playerid, player)
+
+
+		else:
+			cls.addNotificationAndNotify("I may have cheated by looking at your zone", playerid, ownerid)
 		
 		return
+
 
 	#Non robust adding to set of users
 	def addToUsers(self):

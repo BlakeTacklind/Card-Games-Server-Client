@@ -14,7 +14,7 @@ def getZoneContents(zoneNum):
     return y
 
 def getZoneContentsAndExtra(zoneNum):
-    x = db.prepare("SELECT array_length(cards,1), owner from zones where id = $1::integer limit 1;")(zoneNum)
+    x = db.prepare("SELECT array_length(cards,1), owner, game from zones where id = $1::integer limit 1;")(zoneNum)
 
     if not x:
         return None, None
@@ -23,7 +23,7 @@ def getZoneContentsAndExtra(zoneNum):
 
     y = [{'pos':i[0], 'id':i[1], 'name':i[2], 'info':i[3], 'resource':i[4]} for i in y]
         
-    return y, {'owner': x[0]['owner'], 'id':zoneNum}
+    return y, {'owner': x[0]['owner'], 'id':zoneNum, 'game': x[0]['game']}
 
 #get list of games the player is in
 #TODO: use the player's games list rather then search the whole games list
@@ -70,4 +70,15 @@ def getPlayers():
     x = [{'id':i[0], 'username':i[1], 'displayname':i[2]} for i in x]
         
     return x
+
+def getPlayersInGame(gameID):
+    x = db.prepare("SELECT players from \"gameInstance\" WHERE id = $1::integer;")(gameID)
+        
+    if not x:
+        return None
+
+    return list(x[0]["players"])
+
+# print(getPlayersInGame(36))
+
 

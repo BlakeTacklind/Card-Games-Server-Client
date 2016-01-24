@@ -12,7 +12,7 @@ var NotificationList = React.createClass({
 				{this.props.data.map(function(curr, i){
 						return (<NotificationElement data={curr} key={i} 
 							clicked={function(){
-								// this.props.notationClicked(curr.id, curr.name, curr.owner);
+								this.props.delNot(curr.id);
 							}.bind(this)} />)
 					}.bind(this))
 				}

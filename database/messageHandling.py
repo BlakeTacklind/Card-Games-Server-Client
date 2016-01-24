@@ -275,3 +275,32 @@ def handleNotificationRequest(args):
 
 def handleMarkReadRequest(args):
 	
+	if 'mesids' not in args:
+		return ERROR.missingARG(Messages["MarkReadRequest"], 'mesids')
+
+	mesids = args["mesids"]
+
+	if type(mesids) is not list:
+		return ERROR.badTypeARG(Messages["MarkReadRequest"], 'mesids')
+
+	if any((type(i) is not int for i in mesids)):
+		return ERROR.badTypeARG(Messages["MarkReadRequest"], 'mesids')
+
+	if markReadAlot(mesids):
+		return {'rq':Messages["MarkReadRequestSuccess"], 'ag': None}
+
+	return {'rq':Messages["MarkReadRequestFail"], 'ag': args}
+
+def handleDeleteNotificationRequest(args):
+	if 'id' not in args:
+		return ERROR.missingARG(Messages["deleteNotificationRequest"], 'id')
+
+	uid = args["id"]
+
+	if type(uid) is not int:
+		return ERROR.badTypeARG(Messages["deleteNotificationRequest"], 'id')
+
+	if deleteNotification(uid):
+		return {'rq':Messages["deleteNotificationRequestSuccess"],'ag':args}
+	return {'rq':Messages["deleteNotificationRequestFail"],'ag':args}
+

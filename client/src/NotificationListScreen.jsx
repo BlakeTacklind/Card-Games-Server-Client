@@ -28,14 +28,31 @@ var NotificationsScreen = React.createClass({
 		if (reqNum == Messages.RequestMessagesSuccess){
 			clientdata.messages = args;
 			this.setState({messages: clientdata.messages});
+			
+			var notReadArr = []
+			clientdata.messages.forEach((cv)=>{if(!cv.read){notReadArr.push(cv.id)}})
+			// console.log(notReadArr)
+			if(notReadArr.length > 0){
+				database.sendRequest(Messages.MarkReadRequest, {mesids: notReadArr})
+			}
+			return null
+		}
+		if (reqNum == Messages.deleteNotificationRequestSuccess){
+			clientdata.messages = clientdata.messages.filter((cv)=>{return cv.id != args.id});
+			// console.log(clientdata.messages)
+			this.setState({messages: clientdata.messages});
 		}
 		return null
+	},
+
+	deleteNotification: function(nid){
+		database.sendRequest(Messages.deleteNotificationRequest, {id: nid})
 	},
 	render: function(){
 		var name = (String(window.sessionStorage.displayname) == null) ? String(window.sessionStorage.username) : String(window.sessionStorage.displayname);
 		return (<div>
 				<h1>{name + "'s Notifications"}</h1>
-				<NotificationList data={this.state.messages} />
+				<NotificationList data={this.state.messages} delNot={this.deleteNotification} />
 			</div>);
 	},
 });

@@ -46,7 +46,7 @@ def deleteNotification(mesid):
 
 
 def markReadAlot(mesids):	
-	ret = db.prepare("UPDATE notifications SET read = t WHERE id = any($1::integer[])")(mesids)
+	ret = db.prepare("UPDATE notifications SET read = TRUE WHERE id = any($1::integer[])")(mesids)
 
 	if ret[1] > 0:
 		return True
