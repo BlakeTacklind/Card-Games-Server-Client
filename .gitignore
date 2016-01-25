@@ -4,3 +4,5 @@ client/node_modules/
 client/dist/
 database/dist/
 database/python_play.egg-info/
+nginxFiles/temp
+nginxFiles/logs
