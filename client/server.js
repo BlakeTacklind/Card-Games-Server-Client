@@ -6,7 +6,7 @@ var WebpackConfig = require('./webpack.config')
 var app = express()
 
 app.use(webpackDevMiddleware(webpack(WebpackConfig), {
-  publicPath: '/dist/',
+  publicPath: '/',
   stats: {
     colors: true
   }, 
@@ -14,7 +14,7 @@ app.use(webpackDevMiddleware(webpack(WebpackConfig), {
   lazy:true
 }))
 
-app.get("/", express.static(__dirname+"\\dist"))
+app.get("/", express.static(__dirname+"\\dist\\"))
 app.get('*', function(req, res){
 // 	res.send('Answer is: '+req.originalUrl)
 	// res.sendFile(express.static(__dirname+"\\dist\\index.html"))
