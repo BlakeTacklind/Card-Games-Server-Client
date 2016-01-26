@@ -34,7 +34,7 @@ var database = {
    callback: function(req, args){
       console.log("No call back set")
    },
-   init: function(){
+   initConnection: function(){
       // callback=cb;
       socket = new WebSocket("ws://127.0.0.1:11337");
       socket.binaryType = "arraybuffer";
@@ -59,6 +59,15 @@ var database = {
          socket = null;
          isopen = false;
       }
+   },
+   reconnect: function(){
+      if (isopen){
+         socket.close()
+         socket = null;
+         isopen = false;
+      }
+
+      this.initConnection;
    },
 }
 
