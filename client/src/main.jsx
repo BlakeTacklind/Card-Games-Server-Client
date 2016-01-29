@@ -14,6 +14,7 @@ var ZoneSelectorScreenPlace = require('./ZoneSelectorScreenPlace.jsx')
 var ZoneSelectorScreenTake = require('./ZoneSelectorScreenTake.jsx')
 var NewGameScreen = require('./NewGameScreen.jsx')
 var NotificationList = require('./NotificationListScreen.jsx')
+var GameBoardScreen = require('./GameBoardScreen.jsx')
 
 var database = require('./databaseHook.js')
 
@@ -33,8 +34,7 @@ var NoPage = React.createClass({
 	}
 })
 
-			// <Route path="zones/take" component={ZoneSelectorScreen} />
-	
+
 render((
 	<Router history={browserHistory}>
 		<Route path="/" component={CardGame} >
@@ -43,6 +43,7 @@ render((
 			<Route path="p/:name/games" component={GameListScreen} />
 			<Route path="p/:name/messages" component={NotificationList} />
 			<Route path="g/:id" component={GameDataScreen} />
+			<Route path="g/:id/board" component={GameBoardScreen} />
 			<Route path="z/:id" component={ZoneDataScreen} />
 			<Route path="newgame" component={NewGameScreen} />
 			<Route path="zones/place" component={ZoneSelectorScreenPlace} />

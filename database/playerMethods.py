@@ -24,11 +24,11 @@ def addUser(username):
 	x = db.prepare("SELECT id from users where username = $1::Text limit 1;")(username)
 
 	if x:
-		return 0
+		return False
 
-	x = db.prepare("INSERT INTO users (username, id) VALUES ($1::Text, DEFAULT) RETURNING id, username;")(username)[0]
+	x = db.prepare("INSERT INTO users (username, displayname, id) VALUES ($1::Text, $1::Text, DEFAULT) RETURNING id, username, displayname;")(username)[0]
 
-	return {'id':x[0], 'username':x[1]}
+	return {'id':x[0], 'username':x[1], 'displayname':x[2]}
 
 #update a users display name
 def updateDisplayName(pid, nstr):

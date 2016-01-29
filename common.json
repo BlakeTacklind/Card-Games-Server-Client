@@ -96,6 +96,13 @@
 		"deleteNotificationRequestFail": 422,
 		"comment_deleteNotificationRequestFail": "new message Notification",
 
+		"GameBoardDataRequest": 900,
+		"comment_GameBoardDataRequest": "new message Notification",
+		"GameBoardDataRequestSuccess": 901,
+		"comment_GameBoardDataRequestSuccess": "new message Notification",
+		"GameBoardDataRequestFail": 902,
+		"comment_GameBoardDataRequestFail": "new message Notification",
+
 		"ErrorInCardOperation": 999,
 		"comment_ErrorInCardOperation": "failed card op",
 

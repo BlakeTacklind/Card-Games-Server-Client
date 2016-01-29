@@ -8,6 +8,8 @@ def getZoneContents(zoneNum):
         return None
 
     y = db.prepare("SELECT x, cards.id, cards.name, cards.info, cards.resource from generate_series(1,$1::integer) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $2::integer;")(x[0][0], zoneNum)
+    # Potential new one line select
+    # y = db.prepare("SELECT x, cards.id, cards.name, cards.info, cards.resource from generate_series(1,(SELECT array_length(cards,1) from zones where id = $1::integer limit 1)) as x join zones on true join cards on zones.cards[x] = cards.id where zones.id = $1::integer;")(zoneNum)
 
     y = [{'pos':i[0], 'id':i[1], 'name':i[2], 'info':i[3], 'resource':i[4]} for i in y]
         
