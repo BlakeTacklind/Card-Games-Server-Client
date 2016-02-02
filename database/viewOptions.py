@@ -81,6 +81,20 @@ def getPlayersInGame(gameID):
 
     return list(x[0]["players"])
 
-# print(getPlayersInGame(36))
+def getCardsInPreset(psid):
+    x = db.prepare("SELECT cards from \"presetZones\" WHERE id = $1::integer;")(psid)
+        
+    if not x:
+        return None
+
+    x = list(x[0]["cards"])
+
+    print(x)
+
+    y = db.prepare("SELECT name from cards WHERE id = any($1::integer[]);")(x)
+
+    return list(map(lambda i:i[0],y)) 
+
+# print(getCardsInPreset(2))
 
 
