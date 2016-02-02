@@ -54,9 +54,3 @@ render((
 	),
   document.getElementById('main')
 );
-
-			// <Route path="(player/)games" component={GameListScreen} />
-			// <Route path="g/:id" component={GameDataScreen} />
-			// <Route path="z/:id" component={ZoneDataScreen} />
-			// <Route path="zones" component={ZoneSelectorScreen} />
-			// <Route path="newGame" component={NewGameScreen} />

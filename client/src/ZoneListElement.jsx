@@ -8,7 +8,12 @@ var ZoneListElement = React.createClass({
 		if(!this.props.buttons)
 			return <p onClick={this.props.clicked}>{this.props.data.owner==null?null:(this.props.data.ownerd==null?this.props.data.owneru:this.props.data.owneru)+"'s"} {this.props.data.name}</p>
 		
-		return <div>
+		if (this.props.other)
+			var style={backgroundColor: 'Gainsboro'}
+		else
+			var style={backgroundColor: 'GhostWhite'}
+
+		return <div style={style}>
 				<p onClick={this.props.clicked}>{this.props.data.owner==null?null:(this.props.data.ownerd==null?this.props.data.owneru:this.props.data.owneru)+"'s"} {this.props.data.name}</p>
 				<button onClick={this.shuffleZone}>Shuffle</button>
 				<button onClick={this.props.dealZone}>Deal</button>

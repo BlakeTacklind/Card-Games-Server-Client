@@ -8,7 +8,7 @@ var GameList = React.createClass({
 		if(this.props.data == null) return null
 		return (<div>
 				{this.props.data.map(function(curr, i){
-						return (<CardViewer card={curr} key={i} 
+						return (<CardViewer card={curr} key={i} other={(i%2)==1}
 							clicked={function(){
 									window.sessionStorage.cardPosition = i; 
 									this.props.clicked();

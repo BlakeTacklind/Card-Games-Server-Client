@@ -8,10 +8,15 @@ var CardViewer = React.createClass({
 		return <div onClick={this.props.clicked}>{this.card()}</div>
 	},
 	card: function(){
+		if (this.props.other)
+			var style={backgroundColor: 'Gainsboro'}
+		else
+			var style={backgroundColor: 'GhostWhite'}
+
 		if(this.props.card["resource"] != null)
 			return <div><img src={this.props.card["resource"]} alt={this.props.card["name"]} /></div>;
 		else
-			return <p>{this.props.card["name"]}</p>;
+			return <p style={style}>{this.props.card["name"]}</p>;
 	},
 });
 
