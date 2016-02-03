@@ -286,3 +286,23 @@ def getCardsFromZoneUnsafe(zid):
     if not temp:
         return None
     return list(temp[0]["cards"])
+
+import functools
+
+def addDecksToZone(deckArr, zid):
+    currcards = db.prepare("SELECT cards FROM zones WHERE id = $1::integer;")(zid)
+
+    if not currcards:
+        return False
+
+    currcards = currcards[0]['cards']
+
+    addCards = db.prepare("SELECT p.cards from unnest($1::integer[]) as x join \"presetZones\" as p on p.id=x;")(deckArr)
+
+    if not addCards:
+        return True
+
+    # print(functools.reduce(lambda x, y: x+list(y['cards']), addCards, list(currcards)))
+    db.prepare("UPDATE zones SET cards = $1::integer[] WHERE id = $2::integer;")(functools.reduce(lambda x, y: x+list(y['cards']), addCards, list(currcards)), zid)
+
+# addDecksToZone([1, 1], 108)

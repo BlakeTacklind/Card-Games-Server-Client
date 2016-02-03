@@ -95,6 +95,13 @@ def getCardsInPreset(psid):
 
     return list(map(lambda i:i[0],y)) 
 
+def getDecksList():
+    x = db.prepare("SELECT id, name FROM \"presetZones\";")
+
+    x = [{'id':i[0], 'name':i[1]} for i in x]
+
+    return x
+
 # print(getCardsInPreset(2))
 
 

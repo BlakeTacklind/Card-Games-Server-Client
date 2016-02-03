@@ -59,6 +59,13 @@
 		"GetAllOtherPlayersFail": 172,
 		"comment_GetAllOtherPlayersFail": "get players fail",
 
+		"GetDeckChooser": 180,
+		"comment_GetDeckChooser": "let player choose deck",
+		"GetDeckChooserSuccess": 181,
+		"comment_GetDeckChooserSuccess": "players choose deck success",
+		"GetDeckChooserFail": 182,
+		"comment_GetDeckChooserFail": "players choose deck fail",
+
 		"GetGameZone": 200,
 		"comment_GetGameZone": "get game zones - cards with visiblity considered)",
 
