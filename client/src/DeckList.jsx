@@ -9,7 +9,7 @@ var DeckList = React.createClass({
 				{this.props.data.map(function(curr, i){
 						return (<DeckElement data={curr} key={i} 
 							clicked={function(){
-								this.props.elementClicked(curr);
+								this.props.elementClicked(i);
 							}.bind(this)} />)
 					}.bind(this))
 				}

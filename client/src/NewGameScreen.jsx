@@ -41,6 +41,7 @@ var NewGame = React.createClass({
 				</div>;
 			}
 		else{
+			console.log("test 1")
 			return <DeckPicker data={this.state.decks}/>;
 		}
 	},
@@ -67,7 +68,7 @@ var NewGame = React.createClass({
 		}
 	},
   isValid: function (str){
-    return !/[^a-zA-Z0-9_ ]/g.test(str);
+    return !/[^a-zA-Z0-9_ -]/g.test(str);
   }
 });
 

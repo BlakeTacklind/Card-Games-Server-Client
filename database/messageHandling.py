@@ -170,9 +170,44 @@ def handleCreateGame(args):
 	if not isAlphaSpaceStr(newName):
 		return ERROR.InvalidCharARG(Messages["CreateNewGame"], 'name')
 
-	if startGame(players, gtype, newName):
-		return {'rq':Messages["CreateNewGameSuccess"],'ag':None}
-	return {'rq':Messages["CreateNewGameFail"],'ag':None}
+	ret = startGame(players, gtype, newName)
+
+	if ret is True:
+		return {'rq':Messages["CreateNewGameSuccess"],'ag':None}, None
+	elif ret is False:
+		return {'rq':Messages["CreateNewGameFail"],'ag':None}, None
+	else:
+		return {'rq': Messages["GetDeckChooser"], 'ag':getDecksList()}, ret
+
+def handleDeckChooser(args, data):
+
+	if data is None:
+		return ERROR.missingARG(Messages["GetDeckChooser"], 'data not set')
+
+	if 'decks' not in args:
+		return ERROR.missingARG(Messages["GetDeckChooser"], 'decks')
+
+	decks = args["decks"]
+
+	if type(decks) is not list:
+		return ERROR.badTypeARG(Messages["GetDeckChooser"], 'decks')
+
+	if any((type(i) is not int for i in decks)):
+		return ERROR.badTypeARG(Messages["GetDeckChooser"], 'decks')
+
+	if not addDecksToZone(args['decks'], data[0]):
+		return {'rq':Messages["GetDeckChooserFail"],'ag':None}, None
+
+	ret = runStartFunctions(data[1], data[2], data[3])
+
+	if ret is True:
+		return {'rq':Messages["CreateNewGameSuccess"],'ag':None}, None
+	elif ret is False:
+		return {'rq':Messages["CreateNewGameFail"],'ag':None}, None
+	else:
+		return {'rq': Messages["GetDeckChooser"], 'ag':getDecksList()}, ret
+
+
 
 def handleShuffleZone(args):
 	if 'zone' not in args:

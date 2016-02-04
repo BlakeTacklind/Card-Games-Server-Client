@@ -15,17 +15,27 @@ var DeckPicker = React.createClass({
 	},
 	render: function(){
 		return (<div>
+				<button onClick={this.selectDecks}>Done</button>
+				<button onClick={this.cancelSelect}>Cancel</button>
 				<DeckList elementClicked={this.removeFromList} data={this.state.currentSelected}/>
-				<DeckList elementClicked={this.addToList}/>
+				<DeckList elementClicked={this.addToList} data={this.props.data} />
 			</div>);
 	},
 	addToList: function(index){
-		this.setState({currentSelected:[...currentSelected, this.props.data[index]]})
+		var arr = [...this.state.currentSelected, this.props.data[index]];
+		console.log(arr);
+		this.setState({currentSelected:arr})
 	},
 	removeFromList: function(index){
-		cS = currentSelected
+		var cS = this.state.currentSelected
 		cS.splice(index, 1)
-		return cS
+		this.setState({currentSelected: cS})
+	}, 
+	selectDecks: function(){
+		database.sendRequest(Messages['GetDeckChooserSuccess'], {decks:this.state.currentSelected.map((cv)=>{return cv.id;})})
+	},
+	cancelSelect: function(){
+		database.sendRequest(Messages['GetDeckChooserFail'], null)
 	},
 
 });

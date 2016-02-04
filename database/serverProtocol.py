@@ -13,6 +13,7 @@ class MyServerProtocol(WebSocketServerProtocol):
 	def __init__(self):
 		self.inUsers = False
 		self.zones = set()
+		self.gameInitFuncs = None
 
 	def onConnect(self, request):
 		print("Client connecting: {0}".format(request.peer))
@@ -115,7 +116,25 @@ class MyServerProtocol(WebSocketServerProtocol):
 			return
 
 		if rq == Messages["CreateNewGame"]:
-			self.sendMessage(json.dumps(handleCreateGame(args)).encode('utf8'))
+			mes, data = handleCreateGame(args)
+			self.gameInitFuncs = data
+			self.sendMessage(json.dumps(mes).encode('utf8'))
+			return
+
+		if rq == Messages["GetDeckChooserSuccess"]:
+			print("Checks 1:")
+			print(str(args))
+			print(str(self.gameInitFuncs))
+			mes, data = handleDeckChooser(args, self.gameInitFuncs)
+			print("Checks 2:")
+			print(mes)
+			print(data)
+			self.gameInitFuncs = data
+			self.sendMessage(json.dumps(mes).encode('utf8'))
+			return
+
+		if rq == Messages["GetDeckChooserFail"]:
+			self.gameInitFuncs = None
 			return
 
 		if rq == Messages["GetGameTypes"]:
