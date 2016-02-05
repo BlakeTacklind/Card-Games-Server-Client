@@ -13,7 +13,8 @@ ZoneSelectorScreen.zoneClicked = function(i, n){
 			posT: 0
 		}); 
 	window.sessionStorage.cardPosition = -1
-	this.context.router.replace('/z/'+Number(window.sessionStorage.zoneSelectedId))
+	this.context.router.goBack()
+	// this.context.router.replace('/z/'+Number(window.sessionStorage.zoneSelectedId))
 }
 
 module.exports = React.createClass(ZoneSelectorScreen)

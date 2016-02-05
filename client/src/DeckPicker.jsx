@@ -15,9 +15,11 @@ var DeckPicker = React.createClass({
 	},
 	render: function(){
 		return (<div>
-				<button onClick={this.selectDecks}>Done</button>
-				<button onClick={this.cancelSelect}>Cancel</button>
-				<DeckList elementClicked={this.removeFromList} data={this.state.currentSelected}/>
+				<div>
+					<button onClick={this.selectDecks}>Done</button>
+					<button onClick={this.cancelSelect}>Cancel</button>
+				</div>
+				<DeckList elementClicked={this.removeFromList} data={this.state.currentSelected} style={{backgroundColor: 'LightCoral'}}/>
 				<DeckList elementClicked={this.addToList} data={this.props.data} />
 			</div>);
 	},
@@ -33,9 +35,11 @@ var DeckPicker = React.createClass({
 	}, 
 	selectDecks: function(){
 		database.sendRequest(Messages['GetDeckChooserSuccess'], {decks:this.state.currentSelected.map((cv)=>{return cv.id;})})
+		this.setState({currentSelected: []});
 	},
 	cancelSelect: function(){
 		database.sendRequest(Messages['GetDeckChooserFail'], null)
+		this.context.router.push('/p/'+String(window.sessionStorage.username)+'/games')
 	},
 
 });

@@ -41,7 +41,6 @@ var NewGame = React.createClass({
 				</div>;
 			}
 		else{
-			console.log("test 1")
 			return <DeckPicker data={this.state.decks}/>;
 		}
 	},

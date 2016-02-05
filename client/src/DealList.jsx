@@ -17,9 +17,11 @@ var DealZones = React.createClass({
 		if(this.props.data == null)
 			return null
 
-		console.log(this.props.data.find((ele) => {
-			return ele.id == Number(window.sessionStorage.zoneSelectedId)
-		}))		
+		// console.log(this.props.data.find((ele) => {
+		// 	return ele.id == Number(window.sessionStorage.zoneSelectedId)
+		// }))		
+
+		
 
 		return (<form action="deal">
 				<div>
@@ -30,10 +32,16 @@ var DealZones = React.createClass({
 				{this.props.data.map(function(curr, i){
 						if(curr.id == Number(window.sessionStorage.zoneSelectedId))
 							return null;
-						return (
-							<div>
+
+						var style;
+						if(i%2==1)
+							style={backgroundColor: 'Gainsboro'};
+						else
+							style={backgroundColor: 'GhostWhite'};
+
+						return (<div style={style}>
 								<input type="checkbox" value={"b"+i} name="zone" key={"c"+i} onClick={function(e){this.props.handleChecked(e, curr.id)}.bind(this)}/>
-								<ZoneListElement data={curr} buttons={false} key={i}/>
+								<ZoneListElement data={curr} buttons={false} key={i} other={i%2==1}/>
 							</div>)
 					}.bind(this))
 				}
