@@ -9,7 +9,7 @@ module.exports = {
     common: ['react', 'react-router']
   },
   output: {
-    path: __dirname + "/dist",
+    path: "/home/blake/cards/",
     publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',

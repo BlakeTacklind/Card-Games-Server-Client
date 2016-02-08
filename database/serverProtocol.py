@@ -11,6 +11,7 @@ class MyServerProtocol(WebSocketServerProtocol):
 	rooms = dict()
 
 	def __init__(self):
+		super().__init__()
 		self.inUsers = False
 		self.zones = set()
 		self.gameInitFuncs = None
@@ -25,7 +26,6 @@ class MyServerProtocol(WebSocketServerProtocol):
 		self.removeFromUsers()
 		self.removeFromAllZones()
 		print("WebSocket connection closed: {0}".format(reason))
-		
 
 	def onMessage(self, payload, isBinary):
 		res = self.unpackMessage(payload)

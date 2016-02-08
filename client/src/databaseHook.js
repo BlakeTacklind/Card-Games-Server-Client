@@ -36,7 +36,7 @@ var database = {
    },
    initConnection: function(){
       // callback=cb;
-      socket = new WebSocket("ws://127.0.0.1:11337");
+      socket = new WebSocket("ws://cards.tacklind.com/websocket/");
       socket.binaryType = "arraybuffer";
 
       socket.onopen = function() {
