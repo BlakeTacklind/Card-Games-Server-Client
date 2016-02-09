@@ -34,17 +34,26 @@ var database = {
    callback: function(req, args){
       console.log("No call back set")
    },
+   connectionEvent: function(isConnected){
+      console.log("No connection Event set")
+   },
    initConnection: function(){
       // callback=cb;
-      socket = new WebSocket("ws://cards.tacklind.com/websocket/");
+      console.log("test")
+
+      socket = new WebSocket("ws://127.0.0.1:11337");
+
+      console.log("test 2")
+
       socket.binaryType = "arraybuffer";
 
       socket.onopen = function() {
          // console.log(socket);
          console.log("Connected!");
          isopen = true;
+         this.connectionEvent(isopen)
          // console.log(this.isopen);
-      }
+      }.bind(this)
 
       socket.onmessage = function(e) {
          if (typeof e.data == "string") {
@@ -58,7 +67,8 @@ var database = {
          console.log("Connection closed.");
          socket = null;
          isopen = false;
-      }
+         this.connectionEvent(isopen)
+      }.bind(this)
    },
    reconnect: function(){
       if (isopen){
@@ -66,7 +76,6 @@ var database = {
          socket = null;
          isopen = false;
       }
-
       this.initConnection;
    },
 }
